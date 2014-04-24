@@ -10,14 +10,12 @@ class Student(db.Model):
     l_name = db.Column(db.String(20))
     f_name = db.Column(db.String(20))
     m_name = db.Column(db.String(20), nullable = True)
-    sec_id = db.Column(db.Integer)
 
-    def __init__(self, pid, f_name, m_name, l_name, sec_id):
+    def __init__(self, pid, f_name, m_name, l_name):
         self.pid = pid
         self.f_name = f_name
         self.m_name = m_name
         self.l_name = l_name
-        self.sec_id = sec_id
 
     def __repr__(self):
         return '<Student %r>' % (self.f_name + self.l_name)
