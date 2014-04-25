@@ -36,11 +36,11 @@ class Vote(db.Model):
         return '<%r voted %r>' % self.pid, self.vote
 
 @app.route('/')
-def hello_world():
+def vote():
    vote = Vote("a", 123, 0) 
    db.session.add(vote)
    db.session.commit()
-   return make_response(render_template('index.html'), 200)
+   return make_response('done', 200)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
