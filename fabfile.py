@@ -1,9 +1,10 @@
 from fabric.api import *
 
 # the user to use for the remote commands
-env.user = 'appuser'
+env.user = 'david'
 # the servers where the commands are executed
 env.hosts = ['54.193.1.16']
+env.keyfile = ['$HOME/.ssh/id_rsa.pub']
 
 def pack():
     # create a new source distribution as tarball
@@ -21,9 +22,10 @@ def deploy():
         run('tar xzf /tmp/markr.tar.gz')
         # now setup the package with our virtual environment's
         # python interpreter
-        run('/srv/markr/env/bin/python setup.py install')
+        run('mv ' + dist + '/* .')
+        run('/srv/markr/venv/bin/python setup.py install')
     # now that all is set up, delete the folder again
     run('rm -rf /tmp/markr /tmp/markr.tar.gz')
     # and finally touch the .wsgi file so that mod_wsgi triggers
     # a reload of the application
-    run('touch /srv/markr.wsgi')
+    run('touch /srv/markr/markr.wsgi')

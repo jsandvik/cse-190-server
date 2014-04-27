@@ -5,4 +5,4 @@ import sys
 sys.path.insert(0, '/srv/markr')
 
 
-from project import app as application
+from markr import app as application
