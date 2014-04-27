@@ -32,6 +32,7 @@ Create the database by logging into mysql and creating the schema.
 `create schema appDB;`
 
 ## VirtualEnv
+Some instructions on virtualenv with Flask [here](http://flask.pocoo.org/docs/installation/)
 
 `sudo pip install virtualenv`
 
@@ -42,6 +43,10 @@ Create the database by logging into mysql and creating the schema.
 Always activate the virtualenv when installing things for this project.
 
 `. venv/bin/activate`
+
+Update the setuptools in the venv. Make sure you activated the venv
+
+`pip install --upgrade setuptools`
 
 
 ## Installing dependencies
