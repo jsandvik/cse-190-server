@@ -1,4 +1,4 @@
-from project import app, db, Student
+from markr import app, db, Student
 import unittest
 import tempfile
 

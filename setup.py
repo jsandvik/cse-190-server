@@ -4,7 +4,7 @@ setup(
     name='MARKr',
     version='1.0',
     long_description=__doc__,
-    packages=['project'],
+    packages=['markr'],
     include_package_data=True,
     zip_safe=False,
     dependency_links=['http://pypi.python.org/packages/source/F/Flask/Flask-0.10.1.tar.gz'],

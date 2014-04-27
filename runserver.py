@@ -1,2 +1,2 @@
-from project import app
+from markr import app
 app.run(debug=True)
