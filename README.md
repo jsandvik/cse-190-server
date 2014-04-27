@@ -4,8 +4,15 @@ cse-190-server
 # Setup
 Here are local environment instructions for MAC
 
+Clone the repository onto your computer. Doesn't matter where.
+
+`cd /path/to/your/project`
+
+`git clone git@github.com:jsandvik/cse-190-server.git .`
+
 ## Homebrew
-I'm using homebrew on my mac.
+I'm using homebrew on my mac. If you don't have it yet, you can find installation instructions [here](http://brew.sh)
+
 `brew install python mysql`
 
 I also updated pip and setuptools
