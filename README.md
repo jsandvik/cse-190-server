@@ -1,7 +1,11 @@
 cse-190-server
 ==============
 
-# Setup
+# Table of Contents
+1. [Setup](#setup)
+2. [Running](#running)
+
+# Setup <a name="setup"></a>
 Here are local environment instructions for MAC
 
 Clone the repository onto your computer. Doesn't matter where.
@@ -69,5 +73,12 @@ open a python shell by running `python` from the command line
 
 `db.create_all()` will create the tables
 
+# Running the app <a name="running"></a>
+
+`cd /path/to/project/`
+
+`python project.py`
+
+If there are no errors, the app should show up when you visit [localhost:5000](http://localhost:5000)
 
 
