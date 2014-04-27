@@ -4,9 +4,10 @@ cse-190-server
 # Table of Contents
 1. [Setup](#setup)
 2. [Running](#running)
+3. [Deployment](#deploy)
 3. [Running Unit Tests](#tests)
 
-# Setup <a name="setup"></a>
+# <a name="setup"></a>Setup 
 Here are local environment instructions for MAC
 
 Clone the repository onto your computer. Doesn't matter where.
@@ -74,7 +75,7 @@ open a python shell by running `python` from the command line
 
 `db.create_all()` will create the tables
 
-# Running the app <a name="running"></a>
+# <a name="running"></a>Running the app 
 
 `cd /path/to/project/`
 
@@ -82,7 +83,11 @@ open a python shell by running `python` from the command line
 
 If there are no errors, the app should show up when you visit [localhost:5000](http://localhost:5000)
 
-# Running unit tests <a name="tests"></a>
+# <a name="deploy"></a>Deploying the app to the server 
+
+Going to use [Fabric](http://flask.pocoo.org/docs/patterns/fabric/) and [Distribute](http://flask.pocoo.org/docs/patterns/distribute/#distribute-deployment) to deploy to the server. Working on this now more info coming soon. - DD 4/26
+
+# <a name="tests"></a>Running unit tests 
 
 `cd /path/to/project/`
 
