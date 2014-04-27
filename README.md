@@ -4,6 +4,7 @@ cse-190-server
 # Table of Contents
 1. [Setup](#setup)
 2. [Running](#running)
+3. [Running Unit Tests](#tests)
 
 # Setup <a name="setup"></a>
 Here are local environment instructions for MAC
@@ -81,4 +82,17 @@ open a python shell by running `python` from the command line
 
 If there are no errors, the app should show up when you visit [localhost:5000](http://localhost:5000)
 
+# Running unit tests <a name="tests"></a>
+
+`cd /path/to/project/`
+
+`python tests.py`
+
+This will run all of the tests located in tests.py. You can add more tests by adding more functions to test.py, but they must begin with the word 'test'.
+
+In order for unit tests to run, you will need to create another seperate database in mysql, called testDB:
+
+`mysql -u root`
+
+`create schema testDB;`
 
