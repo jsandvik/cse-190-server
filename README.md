@@ -62,7 +62,7 @@ Run these in order to install the dependencies.
 
 `export CPPFLAGS=-Qunused-arguments`
 
-`pip install --allow-external argparse --upgrade -r requirements.txt`
+`python setup.py develop`
 
 ## Updating the database
 SQLAlchemy can create the database for us based on the models we create. If you can't connect to the database, make sure the database connection info refers to your local version.
@@ -85,7 +85,13 @@ If there are no errors, the app should show up when you visit [localhost:5000](h
 
 # <a name="deploy"></a>Deploying the app to the server 
 
-Going to use [Fabric](http://flask.pocoo.org/docs/patterns/fabric/) and [Distribute](http://flask.pocoo.org/docs/patterns/distribute/#distribute-deployment) to deploy to the server. Working on this now more info coming soon. - DD 4/26
+To deploy to the server, open fabfile.py and change your username to the server username you were assigned to.
+
+To deploy, run
+
+`fab pack deploy`
+
+This will upload your files and install any dependencies you added on the server.
 
 # <a name="tests"></a>Running unit tests 
 
