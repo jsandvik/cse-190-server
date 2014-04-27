@@ -25,6 +25,12 @@ Run mysql using the provided commands from homebrew or use
 
 `mysql.server start`
 
+Create the database by logging into mysql and creating the schema.
+
+`mysql -u root`
+
+`create schema appDB;`
+
 ## VirtualEnv
 
 `sudo pip install virtualenv`
@@ -33,15 +39,30 @@ Run mysql using the provided commands from homebrew or use
 
 `virtualenv venv`
 
-Always activate the virtualenv when installing things
+Always activate the virtualenv when installing things for this project.
 
 `. venv/bin/activate`
 
 
 ## Installing dependencies
+Run these in order to install the dependencies.
+
 `export CFLAGS=-Qunused-arguments`
 
 `export CPPFLAGS=-Qunused-arguments`
 
 `pip install --allow-external argparse --upgrade -r requirements.txt`
+
+## Updating the database
+SQLAlchemy can create the database for us based on the models we create. If you can't connect to the database, make sure the database connection info refers to your local version.
+
+open a python shell by running `python` from the command line
+
+`from project import db`
+
+`db.drop_all()` will drop all tables in the database
+
+`db.create_all()` will create the tables
+
+
 
