@@ -7,12 +7,14 @@ setup(
     packages=['project'],
     include_package_data=True,
     zip_safe=False,
+    dependency_links=['http://pypi.python.org/packages/source/F/Flask/Flask-0.10.1.tar.gz'],
     install_requires=[
-        'flask', 
+        'Flask', 
         'requests', 
         'SQLAlchemy', 
         'Flask-SQLAlchemy', 
         'MySQL-python', 
         'fabric'
     ]
+   
 ) 
