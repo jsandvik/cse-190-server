@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask import render_template, make_response
+from flask import render_template, make_response, request
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:cse190ucsd@localhost/appDB'
@@ -35,12 +35,22 @@ class Vote(db.Model):
     def __repr__(self):
         return '<%r voted %r>' % self.pid, self.vote
 
-@app.route('/')
+@app.route('/vote/', methods=['POST'])
 def vote():
-   vote = Vote("a", 123, 0) 
-   db.session.add(vote)
-   db.session.commit()
-   return make_response('done', 200)
+    # Get POST args
+    student_vote = request.form.get('vote', None, str)
+    pid = request.form.get('pid', None, int)
+
+    # deny requests that don't send arguments
+    if not student_vote or not pid:
+        return make_response('error', 400)
+
+    # Insert new vote
+    vote = Vote(student_vote, pid, 0) 
+    db.session.add(vote)
+    db.session.commit()
+
+    return make_response('done', 200)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
