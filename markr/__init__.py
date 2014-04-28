@@ -2,9 +2,13 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import render_template, make_response, request
 
+
+# Configurations
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:cse190ucsd@localhost/appDB'
+app.config.from_object('config')
+
 db = SQLAlchemy(app)
+
 
 # Import modules using blueprint handler variable
 # (mod_auth)
