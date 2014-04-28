@@ -79,7 +79,7 @@ open a python shell by running `python` from the command line
 
 `cd /path/to/project/`
 
-`python project.py`
+`python runserver.py`
 
 If there are no errors, the app should show up when you visit [localhost:5000](http://localhost:5000)
 
