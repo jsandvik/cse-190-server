@@ -38,12 +38,12 @@ class Access(db.Model):
     token = db.Column(db.String(10))
     sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id'))
 	
-    def __init__(self, vote, pid):
+    def __init__(self, class_date, token):
         self.class_date = class_date
         self.token = token
 
     def __repr__(self):
-        return '<Accesss %r>' % (self.class_date + self.token)
+        return '<Access %r>' % (self.class_date + self.token)
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
@@ -51,12 +51,12 @@ class Question(db.Model):
     answer = db.Column(db.String(50))
     sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
     
-    def __init__(self, vote, pid):
-        self.class_date = class_date
-        self.token = token
+    def __init__(self, question, answer, sec_id):
+        self.question = question
+        self.answer = answer
         self.sec_id = sec_id
     def __repr__(self):
-        return '<Questions&Ansers %r %r>' % (self.question, self.answer)
+        return '<Questions&Answers %r %r>' % (self.question, self.answer)
 
 
 # if __name__ == '__main__':
