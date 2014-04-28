@@ -20,9 +20,37 @@ class Student(db.Model):
 
     def __repr__(self):
         return '<Student %r>' % (self.f_name + self.l_name)
+		
+class Faculty(db.Model):
+    ucsd_id = db.Column(db.String(10), primary_key=True)
+    l_name_fac = db.Column(db.String(20))
+    f_name_fac = db.Column(db.String(20))
+    m_name_fac = db.Column(db.String(20), nullable = True)
 
+    def __init__(self, uscsd_id, f_name_fac, m_name_fac, l_name_fac):
+        self.pid = pid
+        self.f_name_fac = f_name_fac
+        self.m_name_fac = m_name_fac
+        self.l_name_fac = l_name_fac
+
+    def __repr__(self):
+        return '<Faculty %r>' % (self.f_name_fac + self.l_name_fac)
+		
+class Class(db.Model):
+    sec_id = db.Column(db.Integer, primary_key=True)
+    course_name = db.Column(db.String(10))
+    ucsd_id = db.Column(db.String(10), db.ForeignKey('faculty.ucsd_id'))
+    
+    def __init__(self, sec_id, course_name, ucsd_id):
+        self.sec_id = sec_id
+        self.course_name = course_name
+        self.ucsd_id = ucsd_id
+
+    def __repr__(self):
+        return '<%r Class %r>' % self.sec_id, self.course_name
+		
+		
 class Vote(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     vote = db.Column(db.String(1))
     question_id = db.Column(db.String(10))
     pid = db.Column(db.String(10), db.ForeignKey('student.pid'))
@@ -35,6 +63,31 @@ class Vote(db.Model):
     def __repr__(self):
         return '<%r voted %r>' % self.pid, self.vote
 
+class Access(db.Model):
+    class_date = db.Column(db.DateTime)
+    token = db.Column(db.String(10))
+    sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id'))
+	
+    def __init__(self, vote, pid):
+        self.class_date = class_date
+        self.token = token
+
+    def __repr__(self):
+        return '<Accesss %r>' % (self.class_date + self.token)
+
+class Questions(db.Model):
+    question = db.Column(db.String(50))
+    answer = db.Column(db.String(50))
+	sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
+    
+    def __init__(self, vote, pid):
+        self.class_date = class_date
+        self.token = token
+		self.sec_id = sec_id
+    def __repr__(self):
+        return '<Questions&Ansers %r %r>' % self.question,  % self.answer		
+
+		
 @app.route('/vote/', methods=['POST'])
 def vote():
     # Get POST args
