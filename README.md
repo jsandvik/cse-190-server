@@ -7,7 +7,7 @@ cse-190-server
 3. [Deployment](#deploy)
 3. [Running Unit Tests](#tests)
 
-# <a name="setup"></a>Setup 
+<a name="setup"></a>Setup 
 Here are local environment instructions for MAC
 
 Clone the repository onto your computer. Doesn't matter where.
@@ -15,6 +15,8 @@ Clone the repository onto your computer. Doesn't matter where.
 `cd /path/to/your/project`
 
 `git clone git@github.com:jsandvik/cse-190-server.git .`
+
+Download the [config.py](http://wiggio.com/get_document.php?docid=6882808) file from Wiggio and add it to your top level project directory.
 
 ## Homebrew
 I'm using homebrew on my mac. If you don't have it yet, you can find installation instructions [here](http://brew.sh)
