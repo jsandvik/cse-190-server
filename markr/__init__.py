@@ -29,6 +29,7 @@ class Class(db.Model):
         return '<%r Class %r>' % self.sec_id, self.course_name
 
 class Access(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
     class_date = db.Column(db.DateTime)
     token = db.Column(db.String(10))
     sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id'))
@@ -41,16 +42,17 @@ class Access(db.Model):
         return '<Accesss %r>' % (self.class_date + self.token)
 
 class Questions(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
     question = db.Column(db.String(50))
     answer = db.Column(db.String(50))
-	sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
+    sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
     
     def __init__(self, vote, pid):
         self.class_date = class_date
         self.token = token
-		self.sec_id = sec_id
+        self.sec_id = sec_id
     def __repr__(self):
-        return '<Questions&Ansers %r %r>' % self.question,  % self.answer		
+        return '<Questions&Ansers %r %r>' % (self.question, self.answer)
 
 
 # if __name__ == '__main__':
