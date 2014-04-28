@@ -1,15 +1,11 @@
 from markr import db
 
-class User(db.Model):
-    __abstract__ = True
-    l_name = db.Column(db.String(20), nullable = False)
-    f_name = db.Column(db.String(20), nullable = False)
+class Student(db.Model):
+    pid = db.Column(db.String(10), primary_key=True)
+    l_name = db.Column(db.String(20))
+    f_name = db.Column(db.String(20))
     m_name = db.Column(db.String(20), nullable = True)
-    
-    
-class Student(User):
-    pid = db.Column(db.String(10), primary_key = True)
-    
+
     def __init__(self, pid, f_name, m_name, l_name):
         self.pid = pid
         self.f_name = f_name
@@ -18,15 +14,18 @@ class Student(User):
 
     def __repr__(self):
         return '<Student %r>' % (self.f_name + self.l_name)
-        
-class Faculty(User):
-    username = db.Column(db.String(20), primary_key = True)
-    
-    def __init__(self, username, f_name, m_name, l_name):
-        self.username = username
-        self.f_name = f_name
-        self.m_name = m_name
-        self.l_name = l_name
-        
+		
+class Faculty(db.Model):
+    ucsd_id = db.Column(db.String(10), primary_key=True)
+    l_name_fac = db.Column(db.String(20))
+    f_name_fac = db.Column(db.String(20))
+    m_name_fac = db.Column(db.String(20), nullable = True)
+
+    def __init__(self, uscsd_id, f_name_fac, m_name_fac, l_name_fac):
+        self.pid = pid
+        self.f_name_fac = f_name_fac
+        self.m_name_fac = m_name_fac
+        self.l_name_fac = l_name_fac
+
     def __repr__(self):
-        return '<Faculty %r' % (self.f_name + self.l_name)
+        return '<Faculty %r>' % (self.f_name_fac + self.l_name_fac)

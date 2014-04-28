@@ -1,7 +1,6 @@
 from markr import db
 
 class Vote(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     vote = db.Column(db.String(1))
     question_id = db.Column(db.String(10))
     pid = db.Column(db.String(10), db.ForeignKey('student.pid'))
