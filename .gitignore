@@ -1,6 +1,9 @@
 venv/
 *.pyc
 
+# Config files
+/config.py
+
 # Package distribution
 *.egg-info
 dist/

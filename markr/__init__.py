@@ -2,9 +2,13 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import render_template, make_response, request
 
+
+# Configurations
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:cse190ucsd@localhost/appDB'
+app.config.from_object('config')
+
 db = SQLAlchemy(app)
+
 
 # Import modules using blueprint handler variable
 # (mod_auth)
@@ -41,7 +45,7 @@ class Access(db.Model):
     def __repr__(self):
         return '<Accesss %r>' % (self.class_date + self.token)
 
-class Questions(db.Model):
+class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
     question = db.Column(db.String(50))
     answer = db.Column(db.String(50))
