@@ -45,7 +45,7 @@ class Access(db.Model):
     def __repr__(self):
         return '<Accesss %r>' % (self.class_date + self.token)
 
-class Questions(db.Model):
+class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
     question = db.Column(db.String(50))
     answer = db.Column(db.String(50))
