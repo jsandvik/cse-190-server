@@ -80,7 +80,7 @@ class AppTestCase(unittest.TestCase):
 
         # Invalid student addition (first name missing)
         post_data = {
-            "pid" : "A01234567",
+            "pid" : "A04444444",
             "l_name" : "Bananas",
         }
         response = self.app.post('/auth/add-student/', data=post_data)
@@ -96,6 +96,67 @@ class AppTestCase(unittest.TestCase):
 
         # Invalid student addition (missing all data)
         response = self.app.post('/auth/add-student/', data={})
+        assert response.status == "400 BAD REQUEST"
+
+    def test_add_faculty(self):
+        """
+            Tests the URL that adds a teacher to the database.
+        """
+
+        # Valid faculty addition
+        post_data = {
+            "ucsd_id" : "jsmith@ucsd.edu",
+            "f_name" : "John",
+            "m_name" : "W",
+            "l_name" : "Smith",
+        }
+        response = self.app.post('/auth/add-faculty/', data=post_data)
+        assert response.status == "200 OK"
+
+        # Valid faculty addition (middle name optional)
+        post_data = {
+            "ucsd_id" : "jbananas@ucsd.edu",
+            "f_name" : "Jimmy",
+            "l_name" : "Bananas",
+        }
+        response = self.app.post('/auth/add-faculty/', data=post_data)
+        assert response.status == "200 OK"
+
+        # Invalid faculty addition (ucsd email exists already)
+        post_data = {
+            "ucsd_id" : "jbananas@ucsd.edu",
+            "f_name" : "Jimmy",
+            "l_name" : "Bananas",
+        }
+        response = self.app.post('/auth/add-faculty/', data=post_data)
+        assert response.status == "400 BAD REQUEST"
+
+        # Invalid faculty addition (last name missing)
+        post_data = {
+            "ucsd_id" : "jimmy@ucsd.edu",
+            "f_name" : "Jimmy",
+        }
+        response = self.app.post('/auth/add-faculty/', data=post_data)
+        assert response.status == "400 BAD REQUEST"
+
+        # Invalid faculty addition (first name missing)
+        post_data = {
+            "ucsd_id" : "bananas@ucsd.edu",
+            "l_name" : "Bananas",
+        }
+        response = self.app.post('/auth/add-faculty/', data=post_data)
+        assert response.status == "400 BAD REQUEST"
+
+        # Invalid faculty addition (ucsd email missing)
+        post_data = {
+            "f_name" : "Jimmy",
+            "l_name" : "Bananas",
+        }
+        response = self.app.post('/auth/add-faculty/', data=post_data)
+        assert response.status == "400 BAD REQUEST"
+
+        # Invalid faculty addition (missing all data)
+        response = self.app.post('/auth/add-faculty/', data={})
         assert response.status == "400 BAD REQUEST"
 
     def tearDown(self):
