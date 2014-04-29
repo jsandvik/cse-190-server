@@ -85,6 +85,13 @@ open a python shell by running `python` from the command line
 
 `db.create_all()` will create the tables
 
+### Seeding the database
+The seed script will drop all the database tables and recreate them based on the SQLAlchemy models.
+
+In a terminal window, cd to the project directory
+
+`python seed_db.py`
+
 # <a name="running"></a>Running the app 
 
 `cd /path/to/project/`
