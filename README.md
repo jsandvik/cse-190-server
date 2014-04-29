@@ -56,9 +56,15 @@ Update the setuptools in the venv. Make sure you activated the venv
 
 `pip install --upgrade setuptools`
 
+To deactivate virtualenv
+
+`deactivate`
+
 
 ## Installing dependencies
 Run these in order to install the dependencies.
+
+`. venv/bin/activate`
 
 `export CFLAGS=-Qunused-arguments`
 
@@ -68,6 +74,8 @@ Run these in order to install the dependencies.
 
 ## Updating the database
 SQLAlchemy can create the database for us based on the models we create. If you can't connect to the database, make sure the database connection info refers to your local version.
+
+`. venv/bin/activate`
 
 open a python shell by running `python` from the command line
 
@@ -80,6 +88,8 @@ open a python shell by running `python` from the command line
 # <a name="running"></a>Running the app 
 
 `cd /path/to/project/`
+
+`. venv/bin/activate`
 
 `python runserver.py`
 
@@ -98,6 +108,8 @@ This will upload your files and install any dependencies you added on the server
 # <a name="tests"></a>Running unit tests 
 
 `cd /path/to/project/`
+
+`. venv/bin/activate`
 
 `python tests.py`
 
