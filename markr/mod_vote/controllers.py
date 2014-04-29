@@ -31,6 +31,8 @@ def cast(question_id):
     votes = None
     pid = None
     
+    return_json = request.args.get('resp')
+    
     if request.form and 'vote' in request.form and 'pid' in request.form:
         votes = request.form.getlist('vote')
         pid = request.form.get('pid')
@@ -40,27 +42,29 @@ def cast(question_id):
         pid = request.json.get('pid')
     
     if not votes:
-        if request.json:
+        if return_json:
             return jsonify(**data)
         else:
             flash('Please enter a vote', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id))
     
     if not pid or not Student.query.get(pid):
-        if request.json:
+        if return_json:
             return jsonify(**data)
         else:
             flash('Invalid pid', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id))
-    
+            
+ 
     question = Question.query.get(question_id)
     if not question:
-        if request.json:
+        if return_json:
             return jsonify(**data)
         else:
             flash('Not a valid question', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id, error = errors))
     
+
     for vote in votes:
         vote = Vote(vote, pid, question_id) 
         db.session.add(vote)
@@ -69,7 +73,7 @@ def cast(question_id):
 
     data['status'] = 'success'
     
-    if request.json:
+    if return_json:
         return jsonify(**data)
     else:
         flash('Vote submitted', 'success')
