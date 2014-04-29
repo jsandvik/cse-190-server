@@ -13,7 +13,7 @@ class Student(db.Model):
         self.l_name = l_name
 
     def __repr__(self):
-        return '<Student %r>' % (self.f_name + self.l_name)
+        return '<Student %r>' % (self.f_name + ' ' + self.l_name)
 		
 class Faculty(db.Model):
     ucsd_id = db.Column(db.String(10), primary_key=True)
