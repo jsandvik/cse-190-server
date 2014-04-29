@@ -43,14 +43,14 @@ def cast(question_id):
         if request.json:
             return jsonify(**data)
         else:
-            flash('Please enter a vote', 'error')
+            flash('Please enter a vote', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id))
     
     if not pid or not Student.query.get(pid):
         if request.json:
             return jsonify(**data)
         else:
-            flash('Invalid pid', 'error')
+            flash('Invalid pid', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id))
     
     question = Question.query.get(question_id)
@@ -58,7 +58,7 @@ def cast(question_id):
         if request.json:
             return jsonify(**data)
         else:
-            flash('Not a valid question', 'error')
+            flash('Not a valid question', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id, error = errors))
     
     
