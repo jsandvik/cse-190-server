@@ -33,13 +33,13 @@ class Question(db.Model):
     question = db.Column(db.Text)
     sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
     answer_type = db.Column(db.String(50))
-	lecture_num = db.Column(db.Integer) 
+    lecture_num = db.Column(db.Integer) 
 	
     def __init__(self, question, sec_id, answer_type):
         self.question = question
         self.sec_id = sec_id
         self.answer_type = answer_type
-		self.lecture_num = lecture_num 
+        self.lecture_num = lecture_num 
         
     def __repr__(self):
         return '<Lecture %r Question %r>' % (self.lecture_num, self.question)
