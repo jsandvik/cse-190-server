@@ -4,8 +4,9 @@ from flask import Blueprint, request, render_template, \
 from markr import db
 
 
-teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
+teacher_admin = Blueprint('teacher_admin', __name__, 
+                            url_prefix='/admin', template_folder='templates')
 
 @teacher_admin.route('/', methods=['GET'])
 def index():
-    return make_response("done", 200)
+    return render_template("questions.html")
