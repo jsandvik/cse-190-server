@@ -1,6 +1,6 @@
 from markr import db, Class, Question, Answer
 
-from markr.mod_auth.models import Faculty
+from markr.mod_auth.models import Faculty, Student
 
 db.drop_all()
 db.create_all()
@@ -27,8 +27,18 @@ db.session.add(answer_choice_3)
 db.session.add(answer_choice_4)
 db.session.commit()
 
+student_1 = Student("1234567890", "Larry", "", "Page")
+student_2 = Student("0987654321", "Tim", "", "Cook")
+db.session.add(student_1)
+db.session.add(student_2)
+db.session.commit()
+
+
 teachers = Faculty.query.all()
 print teachers 
+
+students = Student.query.all()
+print students
 
 courses = Class.query.all()
 print courses
@@ -38,3 +48,4 @@ print questions
 
 answers = Answer.query.all()
 print answers
+
