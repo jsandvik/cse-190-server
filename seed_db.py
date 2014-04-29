@@ -14,10 +14,12 @@ course = Class(123, "Mobile Programming", teacher.ucsd_id)
 db.session.add(course)
 db.session.commit()
 
+# First question
 question = Question("Do you want to skip the final this quarter and instead, I just give everyone an A", course.sec_id, "single_select")
 db.session.add(question)
 db.session.commit()
 
+# First question's answers
 answer_choice_1 = Answer("Yes", question.id, False)
 answer_choice_2 = Answer("No", question.id, False)
 answer_choice_3 = Answer("Just give me my A now", question.id, False)
@@ -28,6 +30,25 @@ db.session.add(answer_choice_3)
 db.session.add(answer_choice_4)
 db.session.commit()
 
+# Second question
+question2 = Question("What do you like about this class", course.sec_id, "multi_select")
+db.session.add(question2)
+db.session.commit()
+
+# Second question's answers
+answer_choice_A = Answer("iOS", question2.id, False)
+answer_choice_B = Answer("Backend", question2.id, False)
+answer_choice_C = Answer("Frontend", question2.id, False)
+answer_choice_D = Answer("Nothing", question2.id, False)
+answer_choice_E = Answer("All of the above", question2.id, False)
+db.session.add(answer_choice_A)
+db.session.add(answer_choice_B)
+db.session.add(answer_choice_C)
+db.session.add(answer_choice_D)
+db.session.add(answer_choice_E)
+db.session.commit()
+
+# Students
 student_1 = Student("1234567890", "Larry", "", "Page")
 student_2 = Student("0987654321", "Tim", "", "Cook")
 db.session.add(student_1)
