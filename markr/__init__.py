@@ -23,7 +23,7 @@ app.register_blueprint(teacher_module)
 
 class Class(db.Model):
     sec_id = db.Column(db.Integer, primary_key=True)
-    course_name = db.Column(db.String(10))
+    course_name = db.Column(db.String(50))
     ucsd_id = db.Column(db.String(10), db.ForeignKey('faculty.ucsd_id'))
     
     def __init__(self, sec_id, course_name, ucsd_id):
@@ -32,7 +32,7 @@ class Class(db.Model):
         self.ucsd_id = ucsd_id
 
     def __repr__(self):
-        return '<%r Class %r>' % self.sec_id, self.course_name
+        return '<%r Class %r>' % (self.sec_id, self.course_name)
 
 class Access(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table

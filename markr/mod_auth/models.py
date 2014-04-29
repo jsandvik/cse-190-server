@@ -28,4 +28,4 @@ class Faculty(db.Model):
         self.l_name_fac = l_name_fac
 
     def __repr__(self):
-        return '<Faculty %r>' % (self.f_name_fac + self.l_name_fac)
+        return '<Faculty %r>' % (self.f_name_fac + ' ' + self.l_name_fac)
