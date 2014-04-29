@@ -2,8 +2,8 @@ from markr import db
 
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    vote = db.Column(db.String(1))
-    question_id = db.Column(db.Integer, db.ForeignKey('question.sec_id'))
+    vote = db.Column(db.Integer, db.ForeignKey('answer.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     pid = db.Column(db.String(10), db.ForeignKey('student.pid'))
     
     def __init__(self, vote, pid, question_id):
