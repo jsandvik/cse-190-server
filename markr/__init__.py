@@ -49,16 +49,31 @@ class Access(db.Model):
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
-    question = db.Column(db.String(50))
-    answer = db.Column(db.String(50))
+    question = db.Column(db.Text)
     sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
     
-    def __init__(self, question, answer, sec_id):
+    def __init__(self, question, sec_id):
         self.question = question
-        self.answer = answer
         self.sec_id = sec_id
+        
     def __repr__(self):
-        return '<Questions&Answers %r %r>' % (self.question, self.answer)
+        return '<Question %r>' % (self.question)
+
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(50))
+    question = db.Column(db.Integer, db.ForeignKey('question.id'))
+    is_correct = db.Column(db.Boolean)
+    type = db.Column(db.String(20))
+    
+    def __init__(self, text, question, is_correct):
+        self.text = text
+        self.question = question
+        self.is_correct = is_correct
+        
+    def __repr__(self):
+        return '<Answer %r>' % self.text
+    
 
 
 # if __name__ == '__main__':
