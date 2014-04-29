@@ -1,4 +1,5 @@
-from markr import db, Class, Question, Answer
+from markr import db
+from markr.models import Class, Question, Answer
 
 from markr.mod_auth.models import Faculty, Student
 
@@ -13,7 +14,7 @@ course = Class(123, "Mobile Programming", teacher.ucsd_id)
 db.session.add(course)
 db.session.commit()
 
-question = Question("Do you want to skip the final this quarter and instead, I just give everyone an A", course.sec_id, "single-select")
+question = Question("Do you want to skip the final this quarter and instead, I just give everyone an A", course.sec_id, "single_select")
 db.session.add(question)
 db.session.commit()
 
