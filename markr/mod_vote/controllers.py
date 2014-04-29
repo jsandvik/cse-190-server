@@ -4,6 +4,7 @@ from flask import Blueprint, request, render_template, \
                   
 from markr import db
 from markr.models import Class, Question, Answer
+from markr.mod_auth.models import Student
 
 from markr.mod_vote.models import Vote
 
@@ -38,18 +39,18 @@ def cast(question_id):
         vote = request.json.get('vote')
         pid = request.json.get('pid')
     
-    if not pid:
-        if request.json:
-            return jsonify(**data)
-        else:
-            flash('Invalid pid', 'error')
-            return redirect(url_for('vote.vote_question', question_id = question_id))
-        
     if not vote:
         if request.json:
             return jsonify(**data)
         else:
             flash('Please enter a vote', 'error')
+            return redirect(url_for('vote.vote_question', question_id = question_id))
+    
+    if not pid or not Student.query.get(pid):
+        if request.json:
+            return jsonify(**data)
+        else:
+            flash('Invalid pid', 'error')
             return redirect(url_for('vote.vote_question', question_id = question_id))
     
     question = Question.query.get(question_id)
@@ -59,7 +60,8 @@ def cast(question_id):
         else:
             flash('Not a valid question', 'error')
             return redirect(url_for('vote.vote_question', question_id = question_id, error = errors))
-            
+    
+    
     vote = Vote(vote, pid, question_id) 
     db.session.add(vote)
     db.session.commit()
