@@ -5,6 +5,7 @@ class Class(db.Model):
     sec_id = db.Column(db.Integer, primary_key=True)
     course_name = db.Column(db.String(50))
     ucsd_id = db.Column(db.String(10), db.ForeignKey('faculty.ucsd_id'))
+
     
     def __init__(self, sec_id, course_name, ucsd_id):
         self.sec_id = sec_id
@@ -12,7 +13,7 @@ class Class(db.Model):
         self.ucsd_id = ucsd_id
 
     def __repr__(self):
-        return '<%r Class %r>' % (self.sec_id, self.course_name)
+        return '<%r Class %r %r>' % (self.sec_id, self.course_name )
 
 class Access(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
@@ -32,14 +33,16 @@ class Question(db.Model):
     question = db.Column(db.Text)
     sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
     answer_type = db.Column(db.String(50))
-    
+	lecture_num = db.Column(db.Integer) 
+	
     def __init__(self, question, sec_id, answer_type):
         self.question = question
         self.sec_id = sec_id
         self.answer_type = answer_type
+		self.lecture_num = lecture_num 
         
     def __repr__(self):
-        return '<Question %r>' % (self.question)
+        return '<Lecture %r Question %r>' % (self.lecture_num, self.question)
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
