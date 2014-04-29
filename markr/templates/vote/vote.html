@@ -3,7 +3,18 @@
 {% block body %}
 
 <h1 id="vote">Vote</h1>
-<form role="form" action="{{ url_for('vote.cast') }}?resp=json" method="POST">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{category}}">
+		  <a href="#" class="close" data-dismiss="alert">&times;</a>
+		  {{ message }}
+	  </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<form role="form" action="{{ url_for('vote.cast', question_id=question.id) }}" method="POST">
+	<input type="hidden" name="pid" value="1234567890" id="pid">
 	{% if answers %}
 		{% if question.answer_type == 'single_select' %}
 			{% for answer in answers %}

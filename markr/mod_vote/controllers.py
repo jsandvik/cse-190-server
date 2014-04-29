@@ -9,17 +9,13 @@ from markr.mod_vote.models import Vote
 
 mod_vote = Blueprint('vote', __name__, url_prefix='/vote')
 
-@mod_vote.route('/<sec_id>/<question_id>', methods=['GET'])
-def index(sec_id, question_id):
-    
-    # sec_id = request.args.get('sec_id')
-#     if not sec_id:
-#         return abort(404)
+@mod_vote.route('/', methods=['GET'])
+def index():
+    return render_template('vote/vote.html')
 
-    course = Class.query.get(sec_id)
-    if not course:
-        return abort(404)
-        
+@mod_vote.route('/<question_id>', methods=['GET'])
+def vote_question(question_id):
+    
     question = Question.query.get(question_id)
     if not question:
         return abort(404)
@@ -28,27 +24,50 @@ def index(sec_id, question_id):
         
     return render_template('vote/vote.html', answers=answers, question=question)
     
-@mod_vote.route('/cast', methods=['POST'])
-def cast():
+@mod_vote.route('/cast/<question_id>', methods=['POST'])
+def cast(question_id):
     data = {'status': 'error'}
+    vote = None
+    pid = None
     
+    if request.form and 'vote' in request.form and 'pid' in request.form:
+        vote = request.form.get('vote')
+        pid = request.form.get('pid')
     
-    if 'vote' in request.form and 'pid' in request.form:
-        vote = request.form['vote']
-        pid = request.form['pid']
+    if request.json and 'vote' in request.json and 'pid' in request.json:
+        vote = request.json.get('vote')
+        pid = request.json.get('pid')
     
-    if 'vote' in request.json and 'pid' in request.json:
-        vote = request.json['vote']
-        pid = request.json['pid']
+    if not pid:
+        if request.json:
+            return jsonify(**data)
+        else:
+            flash('Invalid pid', 'error')
+            return redirect(url_for('vote.vote_question', question_id = question_id))
+        
+    if not vote:
+        if request.json:
+            return jsonify(**data)
+        else:
+            flash('Please enter a vote', 'error')
+            return redirect(url_for('vote.vote_question', question_id = question_id))
     
-    if vote and pid:
-        vote = Vote(vote, pid, 0) 
-        db.session.add(vote)
-        db.session.commit()
-    
-        data['status'] = 'success'
+    question = Question.query.get(question_id)
+    if not question:
+        if request.json:
+            return jsonify(**data)
+        else:
+            flash('Not a valid question', 'error')
+            return redirect(url_for('vote.vote_question', question_id = question_id, error = errors))
+            
+    vote = Vote(vote, pid, question_id) 
+    db.session.add(vote)
+    db.session.commit()
+
+    data['status'] = 'success'
     
     if request.json:
         return jsonify(**data)
     else:
-        return redirect(url_for('vote.index'))
+        flash('Vote submitted', 'success')
+        return redirect(url_for('vote.vote_question', question_id = question_id))
