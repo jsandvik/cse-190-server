@@ -13,7 +13,19 @@ class Class(db.Model):
         self.ucsd_id = ucsd_id
 
     def __repr__(self):
-        return '<%r Class %r %r>' % (self.sec_id, self.course_name )
+        return '<%r Class %r %r>' % (self.sec_id, self.course_name, self.ucsd_id)
+        
+class Lecture(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    sec_id = db.Column(db.ForeignKey('class.sec_id'))
+    
+    def __init__(self, date, sec_id):
+        self.date = date
+        self.sec_id = sec_id
+        
+    def __repr__(self):
+        return '<Lecture on %r>' % (self.date)
 
 class Access(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
@@ -31,18 +43,16 @@ class Access(db.Model):
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
     question = db.Column(db.Text)
-    sec_id = db.Column(db.Integer, db.ForeignKey('class.sec_id')) 
     answer_type = db.Column(db.String(50))
-    lecture_num = db.Column(db.Integer) 
+    lecture_id = db.Column(db.ForeignKey('lecture.id')) 
 	
-    def __init__(self, question, sec_id, answer_type):
+    def __init__(self, question, answer_type, lecture_id):
         self.question = question
-        self.sec_id = sec_id
         self.answer_type = answer_type
-        self.lecture_num = lecture_num 
+        self.lecture_id = lecture_id 
         
     def __repr__(self):
-        return '<Lecture %r Question %r>' % (self.lecture_num, self.question)
+        return '<Lecture %r Question %r>' % (self.lecture_id, self.question)
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)

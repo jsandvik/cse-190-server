@@ -1,7 +1,9 @@
 from markr import db
-from markr.models import Class, Question, Answer
+from markr.models import Class, Question, Answer, Lecture
 
 from markr.mod_auth.models import Faculty, Student
+
+import datetime
 
 db.drop_all()
 db.create_all()
@@ -14,8 +16,16 @@ course = Class(123, "Mobile Programming", teacher.ucsd_id)
 db.session.add(course)
 db.session.commit()
 
+lecture_1 = Lecture(datetime.datetime.utcnow(), course.sec_id)
+db.session.add(lecture_1)
+db.session.commit()
+
+lecture_2 = Lecture(datetime.datetime.utcnow(), course.sec_id)
+db.session.add(lecture_2)
+db.session.commit() 
+
 # First question
-question = Question("Do you want to skip the final this quarter and instead, I just give everyone an A", course.sec_id, "single_select")
+question = Question("Do you want to skip the final this quarter and instead, I just give everyone an A", "single_select", lecture_1.id)
 db.session.add(question)
 db.session.commit()
 
@@ -31,7 +41,7 @@ db.session.add(answer_choice_4)
 db.session.commit()
 
 # Second question
-question2 = Question("What do you like about this class", course.sec_id, "multi_select")
+question2 = Question("What do you like about this class", "multi_select", lecture_1.id)
 db.session.add(question2)
 db.session.commit()
 
@@ -64,6 +74,9 @@ print students
 
 courses = Class.query.all()
 print courses
+
+lectures = Lecture.query.all()
+print lectures
 
 questions = Question.query.all()
 print questions
