@@ -28,18 +28,18 @@ def vote_question(question_id):
 @mod_vote.route('/cast/<question_id>', methods=['POST'])
 def cast(question_id):
     data = {'status': 'error'}
-    vote = None
+    votes = None
     pid = None
     
     if request.form and 'vote' in request.form and 'pid' in request.form:
-        vote = request.form.get('vote')
+        votes = request.form.getlist('vote')
         pid = request.form.get('pid')
     
     if request.json and 'vote' in request.json and 'pid' in request.json:
-        vote = request.json.get('vote')
+        votes = request.json.get('vote')
         pid = request.json.get('pid')
     
-    if not vote:
+    if not votes:
         if request.json:
             return jsonify(**data)
         else:
@@ -61,9 +61,10 @@ def cast(question_id):
             flash('Not a valid question', 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id, error = errors))
     
+    for vote in votes:
+        vote = Vote(vote, pid, question_id) 
+        db.session.add(vote)
     
-    vote = Vote(vote, pid, question_id) 
-    db.session.add(vote)
     db.session.commit()
 
     data['status'] = 'success'
