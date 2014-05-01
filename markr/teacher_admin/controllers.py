@@ -31,13 +31,16 @@ def index():
 
             db.session.commit()
         elif action == "edit":
-            pass
+            question = db.session.query(Question).filter(Question.id == question_id).one()
+            question.question = question_body
+            db.session.add(question)
+            db.session.commit()
         elif action == "delete":
             answers = db.session.query(Answer).filter(Answer.question == question_id).all()
             for answer in answers:
                 db.session.delete(answer)
             db.session.commit()
-            
+
             question = db.session.query(Question).filter(Question.id == question_id).one()
             db.session.delete(question)
             db.session.commit()
