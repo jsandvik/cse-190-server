@@ -12,6 +12,7 @@ function add_answer() {
     var $answer = $answers.last().clone();
 
     var num_answers = $answers.length;
+    $answer.find("input").val("");
     $answer.find("span").html(letters[num_answers]);
     $(".answers").append($answer);
 
