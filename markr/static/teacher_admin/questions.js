@@ -21,6 +21,7 @@ function add_answer() {
     var $correct_answers = $question_box.find(".correct-answers");
     var $option = $correct_answers.children("option").last().clone();
     $option.html(letters[num_answers]);
+    $option.val(parseInt($option.val()) + 1);
     $correct_answers.append($option);
 
     // Disable the button
