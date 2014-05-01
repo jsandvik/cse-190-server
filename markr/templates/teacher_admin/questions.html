@@ -43,6 +43,7 @@
                 {% if loop.last %}
                     <button name="action" class="btn btn-primary btn-sm" type="submit" value="add">Add New Question</button>
                 {% else %}
+                    <input type="hidden" name="question-id" value="{{entry.question.id}}">
                     <button name="action" class="btn btn-primary btn-sm" type="submit" value="edit">Save Changes</button>
                     <button name="action" class="btn btn-danger btn-sm" type="submit" value="delete">Delete Question</button>
                 {% endif %}

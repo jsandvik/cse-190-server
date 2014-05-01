@@ -18,6 +18,8 @@ def index():
         answers_text = request.form.getlist("answers", str)
         correct_answer = request.form.get("correct-answer", None, int)
         action = request.form.get("action", None, str)
+        question_id = request.form.get("question-id", None, int)
+
         if action == "add":
             question = Question(question_body, "single_select", 1)
             db.session.add(question)
@@ -26,12 +28,19 @@ def index():
             for i, answer_text in enumerate(answers_text):
                 answer = Answer(answer_text, question.id, i == correct_answer)
                 db.session.add(answer)
-            
+
             db.session.commit()
         elif action == "edit":
             pass
         elif action == "delete":
-            pass
+            answers = db.session.query(Answer).filter(Answer.question == question_id).all()
+            for answer in answers:
+                db.session.delete(answer)
+            db.session.commit()
+            
+            question = db.session.query(Question).filter(Question.id == question_id).one()
+            db.session.delete(question)
+            db.session.commit()
 
     entries = []
     questions = db.session.query(Question).filter(Question.lecture_id == 1).all()   
