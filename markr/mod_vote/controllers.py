@@ -27,7 +27,8 @@ def vote_question(question_id):
     if return_json:
         data = {
             'data': [a.serialize for a in answers],
-            'is_multi_select': True if (question.answer_type == 'multi_select') else False
+            'is_multi_select': True if (question.answer_type == 'multi_select') else False,
+            'question': question.question
         }
         return jsonify(**data)
     
