@@ -2,8 +2,8 @@
 
 {% block body %}
 <script src="{{ url_for('static', filename='teacher_admin/questions.js') }}"></script>
+    {% for entry in entries %}
     <form role="form">
-        {% for entry in entries %}
         <div class="well">
             <div class="form-group">
                 <label>Question</label>
@@ -37,13 +37,13 @@
             </div>
             <div class="btn-group">
                 {% if loop.last %}
-                    <button class="btn btn-primary btn-sm" type="button">Add New Question</button>
+                    <button class="btn btn-primary btn-sm" type="submit" value="add">Add New Question</button>
                 {% else %}
-                    <button class="btn btn-primary btn-sm" type="button">Save Changes</button>
-                    <button class="btn btn-danger btn-sm" type="button">Delete Question</button>
+                    <button class="btn btn-primary btn-sm" type="submit" value="edit">Save Changes</button>
+                    <button class="btn btn-danger btn-sm" type="submit" value="delete">Delete Question</button>
                 {% endif %}
             </div>
         </div>
-        {% endfor %}
     </form>
+    {% endfor %}
 {% endblock %}
