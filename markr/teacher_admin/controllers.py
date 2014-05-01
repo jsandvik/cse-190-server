@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, make_response
                   
 from markr import db
-from markr.models import Question, Answer
+from markr.models import Question, Answer, Lecture
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
@@ -11,7 +11,9 @@ def lectures(section_id):
     """
         View function for editing and viewing lectures in a section
     """
-    return render_template("teacher_admin/lectures.html")
+    lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).all()
+    return render_template("teacher_admin/lectures.html",
+                            lectures=lectures)
 
 @teacher_admin.route('/questions/<int:lecture_id>/', methods=['GET', 'POST'])
 def questions(lecture_id):

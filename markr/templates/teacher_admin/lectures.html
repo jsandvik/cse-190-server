@@ -2,4 +2,23 @@
 
 {% block body %}
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Lecture</th>
+            <th>Date</th>
+            <th>Questions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lecture in lectures %}
+        <tr>
+            <td>Lecture {{loop.index}}</td>
+            <td>{{lecture.date}}</td>
+            <td><a href="/admin/questions/{{lecture.id}}/">Edit Lecture</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
