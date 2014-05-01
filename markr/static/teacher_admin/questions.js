@@ -7,29 +7,37 @@ $(function() {
 });
 
 function add_answer() {
-    $(".remove-answer-btn").prop('disabled', false);
-    var $answers = $(".answers").children("div");
-    var $answer = $answers.last().clone();
+    // Get the question box
+    var $question_box = $(this).closest(".well");
 
-    var num_answers = $answers.length;
+    var $answers = $question_box.find(".answers");
+    var $answer = $answers.children("div").last().clone();
+
+    var num_answers = $answers.children("div").length;
     $answer.find("input").val("");
     $answer.find("span").html(letters[num_answers]);
-    $(".answers").append($answer);
+    $answers.append($answer);
 
-    var $option = $(".correct-answers").children("option").last().clone();
+    var $correct_answers = $question_box.find(".correct-answers");
+    var $option = $correct_answers.children("option").last().clone();
     $option.html(letters[num_answers]);
-    $(".correct-answers").append($option);
+    $correct_answers.append($option);
 
+    // Disable the button
+    $question_box.find(".remove-answer-btn").prop('disabled', false);
 }
 
 function remove_answer() {
-    var $answers = $(".answers").children("div");
+    // Get the question box
+    var $question_box = $(this).closest(".well");
+
+    var $answers = $question_box.find(".answers").children("div");
     $answers.last().remove();
 
-    var $option = $(".correct-answers").children("option");
+    var $option = $question_box.find(".correct-answers").children("option");
     $option.last().remove();
 
     if ($answers.length <= 3) {
-        $(".remove-answer-btn").prop('disabled', true);
+        $question_box.find(".remove-answer-btn").prop('disabled', true);
     }
 }
