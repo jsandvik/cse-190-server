@@ -66,21 +66,22 @@ db.session.add(student_2)
 db.session.commit()
 
 
-teachers = Faculty.query.all()
-print teachers 
-
-students = Student.query.all()
-print students
-
-courses = Class.query.all()
-print courses
-
-lectures = Lecture.query.all()
-print lectures
-
-questions = Question.query.all()
-print questions
-
-answers = Answer.query.all()
-print answers
+print "DATABASE SEEDED!"
+# teachers = Faculty.query.all()
+# print teachers 
+# 
+# students = Student.query.all()
+# print students
+# 
+# courses = Class.query.all()
+# print courses
+# 
+# lectures = Lecture.query.all()
+# print lectures
+# 
+# questions = Question.query.all()
+# print questions
+# 
+# answers = Answer.query.all()
+# print answers
 
