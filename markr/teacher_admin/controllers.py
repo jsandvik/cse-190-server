@@ -6,10 +6,34 @@ from markr.models import Question, Answer
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
-@teacher_admin.route('/', methods=['GET'])
+@teacher_admin.route('/', methods=['GET', 'POST'])
 def index():
-    entries = []
+    """
+        View function for editing questions in a lecture
+    """
 
+    if request.method == "POST":
+        # Get POST data
+        question_body = request.form.get("question", "", str)
+        answers_text = request.form.getlist("answers", str)
+        correct_answer = request.form.get("correct-answer", None, int)
+        action = request.form.get("action", None, str)
+        if action == "add":
+            question = Question(question_body, "single_select", 1)
+            db.session.add(question)
+            db.session.commit()
+            
+            for i, answer_text in enumerate(answers_text):
+                answer = Answer(answer_text, question.id, i == correct_answer)
+                db.session.add(answer)
+            
+            db.session.commit()
+        elif action == "edit":
+            pass
+        elif action == "delete":
+            pass
+
+    entries = []
     questions = db.session.query(Question).filter(Question.lecture_id == 1).all()   
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
