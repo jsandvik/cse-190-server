@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <form>
-        Question: <input type="text" name="question"><br>
+    <form role="form">
+        <div class="form-group">
+            <label>Question</label>
+            <textarea class="form-control" rows="3" name="question"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Answers</label>
+            <div class="input-group">
+                <span class="input-group-addon">A</span>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">B</span>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="btn-group">
+                <button class="btn btn-default btn-sm" type="button" data-toggle="dropdown">Add Answer</button>
+                <button class="btn btn-default btn-sm" type="button" data-toggle="dropdown">Remove Answer</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Correct Answer</label>
+            <select class="form-control">
+                <option>No correct answer</option>
+            </select>
+        </div>
     </form>
 {% endblock %}
