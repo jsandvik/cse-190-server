@@ -17,6 +17,7 @@ def deploy():
     put('dist/%s.tar.gz' % dist, '/tmp/markr.tar.gz')
     # create a place where we can unzip the tarball, then enter
     # that directory and unzip it
+    run('rm -rf /tmp/markr')
     run('mkdir /tmp/markr')
     with cd('/tmp/markr'):
         run('tar xzf /tmp/markr.tar.gz')
@@ -24,8 +25,15 @@ def deploy():
         # python interpreter
         run('mv ' + dist + '/* .')
         run('/srv/markr/venv/bin/python setup.py install')
+        
+        # seed the database
+        run('ln -s /srv/markr/config.py config.py')
+        run('/srv/markr/venv/bin/python seed_db.py')
+         
     # now that all is set up, delete the folder again
     run('rm -rf /tmp/markr /tmp/markr.tar.gz')
+    
     # and finally touch the .wsgi file so that mod_wsgi triggers
     # a reload of the application
     run('touch /srv/markr/markr.wsgi')
+    

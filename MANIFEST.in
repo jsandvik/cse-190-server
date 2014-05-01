@@ -1,5 +1,5 @@
-recursive-include markr/templates *
-recursive-include markr/static *
+recursive-include markr *.py
+
 include README.md
 include runserver.py
-include markr.wsgi
+include seed_db.py
