@@ -7,7 +7,11 @@
     <form role="form" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Question {{loop.index}}</h3>
+                {% if loop.last %}
+                    <h3 class="panel-title">New Question</h3>
+                {% else %}
+                    <h3 class="panel-title">Question {{loop.index}}</h3>
+                {% endif %}
             </div>
             <div class="panel-body">
                 <div class="form-group">
