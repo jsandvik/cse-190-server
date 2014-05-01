@@ -5,7 +5,7 @@ $(function() {
     $(".add-answer-btn").click(add_answer);
     $(".remove-answer-btn").click(remove_answer);
 
-    $(".well").each(function() {
+    $(".panel-body").each(function() {
         $answers = $(this).find(".answers").children("div")
         if ($answers.length <= 3) {
             $(this).find(".remove-answer-btn").prop('disabled', true);
@@ -16,7 +16,7 @@ $(function() {
 
 function add_answer() {
     // Get the question box
-    var $question_box = $(this).closest(".well");
+    var $question_box = $(this).closest(".panel-body");
 
     var $answers = $question_box.find(".answers");
     var $answer = $answers.children("div").last().clone();
@@ -38,7 +38,7 @@ function add_answer() {
 
 function remove_answer() {
     // Get the question box
-    var $question_box = $(this).closest(".well");
+    var $question_box = $(this).closest(".panel-body");
 
     var $answers = $question_box.find(".answers").children("div");
     $answers.last().remove();
