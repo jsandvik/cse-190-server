@@ -20,5 +20,11 @@ def index():
         entry["answers"] = zip(answers, letters)
         entries.append(entry)
 
+    # Create a brand new question that can be added by the user
+    entry = {}
+    entry["question"] = questions.append(Question("", "single_select", 1))
+    entry["answers"] = zip([Answer("", "", 0), Answer("", "", 0)], letters)
+    entries.append(entry)
+
     return render_template("teacher_admin/questions.html", 
                             entries=entries)

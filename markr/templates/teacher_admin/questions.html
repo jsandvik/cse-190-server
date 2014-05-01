@@ -36,8 +36,12 @@
                 </select>
             </div>
             <div class="btn-group">
-                <button class="btn btn-primary btn-sm" type="button">Save Changes</button>
-                <button class="btn btn-danger btn-sm" type="button">Delete Question</button>
+                {% if loop.last %}
+                    <button class="btn btn-primary btn-sm" type="button">Add New Question</button>
+                {% else %}
+                    <button class="btn btn-primary btn-sm" type="button">Save Changes</button>
+                    <button class="btn btn-danger btn-sm" type="button">Delete Question</button>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
