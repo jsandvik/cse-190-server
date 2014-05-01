@@ -6,7 +6,14 @@ from markr.models import Question, Answer
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
-@teacher_admin.route('/<int:lecture_id>/', methods=['GET', 'POST'])
+@teacher_admin.route('/lectures/<int:section_id>/', methods=['GET'])
+def lectures(section_id):
+    """
+        View function for editing and viewing lectures in a section
+    """
+    return render_template("teacher_admin/lectures.html")
+
+@teacher_admin.route('/questions/<int:lecture_id>/', methods=['GET', 'POST'])
 def questions(lecture_id):
     """
         View function for editing questions in a lecture
