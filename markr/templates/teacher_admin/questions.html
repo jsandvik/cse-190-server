@@ -5,22 +5,18 @@
     <form role="form">
         <div class="form-group">
             <label>Question</label>
-            <textarea class="form-control" rows="3" name="question"></textarea>
+            <textarea class="form-control" rows="3" name="question">{{question.question}}</textarea>
         </div>
         <label>Answers</label>
         <div class="answers">
+            {% for answer in answers %}
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">A</span>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" value="{{answer.text}}">
                 </div>
             </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon">B</span>
-                    <input type="text" class="form-control">
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="form-group">
             <div class="btn-group">
@@ -36,5 +32,6 @@
                 <option>B</option>
             </select>
         </div>
+        <button type="button" class="btn btn-primary">Submit Changes</button>
     </form>
 {% endblock %}
