@@ -8,7 +8,7 @@ $(function() {
 
 function add_answer() {
     $(".remove-answer-btn").prop('disabled', false);
-    var $answers = $(".answers").children("div")
+    var $answers = $(".answers").children("div");
     var $answer = $answers.last().clone();
 
     var num_answers = $answers.length;
@@ -18,6 +18,11 @@ function add_answer() {
 }
 
 function remove_answer() {
-    $(".remove-answer-btn").prop('disabled', true);
+    var $answers = $(".answers").children("div");
+    $answers.last().remove();
+
+    if ($answers.length <= 3) {
+        $(".remove-answer-btn").prop('disabled', true);
+    }
 
 }
