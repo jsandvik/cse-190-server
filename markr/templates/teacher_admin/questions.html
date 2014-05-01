@@ -31,7 +31,11 @@
                 <select name="correct-answer" class="form-control correct-answers">
                     <option value="">No correct answer</option>
                     {% for answer, letter in entry.answers %}
-                    <option value="{{loop.index0}}">{{letter}}</option>
+                        {% if answer.is_correct %}
+                            <option value="{{loop.index0}}" selected="selected">{{letter}}</option>
+                        {% else %}
+                            <option value="{{loop.index0}}">{{letter}}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
