@@ -55,6 +55,16 @@ class Question(db.Model):
         
     def __repr__(self):
         return '<Lecture %r Question %r>' % (self.lecture_id, self.question)
+        
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'text': self.question,
+            'answer_type': self.answer_type,
+            'lecture_id': self.lecture_id,
+            'time_limit': self.time_limit
+        }
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
