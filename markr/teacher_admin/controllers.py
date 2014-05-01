@@ -11,4 +11,9 @@ def index():
     question = db.session.query(Question).filter(Question.id == 1).one()
     answers = db.session.query(Answer).filter(Answer.question == 1).all()
 
-    return render_template("teacher_admin/questions.html", question=question, answers=answers)
+    letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
+    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+    return render_template("teacher_admin/questions.html", 
+                            question=question, 
+                            answers=zip(answers, letters))
