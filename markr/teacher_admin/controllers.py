@@ -31,9 +31,22 @@ def index():
 
             db.session.commit()
         elif action == "edit":
+            # Update the question
             question = db.session.query(Question).filter(Question.id == question_id).one()
             question.question = question_body
             db.session.add(question)
+            db.session.commit()
+
+            # First delete all current answers
+            answers = db.session.query(Answer).filter(Answer.question == question_id).all()
+            for answer in answers:
+                db.session.delete(answer)
+            db.session.commit()
+
+            # Then add new answers
+            for i, answer_text in enumerate(answers_text):
+                answer = Answer(answer_text, question.id, i == correct_answer)
+                db.session.add(answer)
             db.session.commit()
         elif action == "delete":
             answers = db.session.query(Answer).filter(Answer.question == question_id).all()
