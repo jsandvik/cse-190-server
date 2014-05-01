@@ -6,11 +6,16 @@ from markr.models import Question, Answer, Lecture
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
-@teacher_admin.route('/lectures/<int:section_id>/', methods=['GET'])
+@teacher_admin.route('/lectures/<int:section_id>/', methods=['GET', 'POST'])
 def lectures(section_id):
     """
         View function for editing and viewing lectures in a section
     """
+    if request.method == "POST":
+        print request.form.get("schedule", 0, int)
+        print request.form.get("start-date", "", str)
+        print request.form.get("end-date", "", str)
+
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).all()
     return render_template("teacher_admin/lectures.html",
                             lectures=lectures)
