@@ -36,7 +36,7 @@ def lectures(section_id):
             db.session.add(lecture)
         db.session.commit()
 
-    lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).all()
+    lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
     return render_template("teacher_admin/lectures.html",
                             lectures=lectures)
 
