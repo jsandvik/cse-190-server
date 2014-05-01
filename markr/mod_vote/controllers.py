@@ -34,6 +34,8 @@ def vote_question(question_id):
     
     return render_template('vote/vote.html', answers=answers, question=question)
     
+# Voting controller
+# Expects a pid and a vote
 @mod_vote.route('/cast/<question_id>', methods=['POST'])
 def cast(question_id):
     data = {'status': 'error'}
@@ -51,26 +53,29 @@ def cast(question_id):
         pid = request.json.get('pid')
     
     if not votes:
+        data['message'] = 'Please enter a vote'
         if return_json:
             return jsonify(**data)
         else:
-            flash('Please enter a vote', 'danger')
+            flash(data['message'], 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id))
     
     if not pid or not Student.query.get(pid):
+        data['message'] = 'Invalid pid'
         if return_json:
             return jsonify(**data)
         else:
-            flash('Invalid pid', 'danger')
+            flash(data['message'], 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id))
             
  
     question = Question.query.get(question_id)
     if not question:
+        data['message'] = 'Not a valid question'
         if return_json:
             return jsonify(**data)
         else:
-            flash('Not a valid question', 'danger')
+            flash(data['message'], 'danger')
             return redirect(url_for('vote.vote_question', question_id = question_id, error = errors))
     
 
