@@ -13,6 +13,7 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+{% if question %}
 <form role="form" action="{{ url_for('vote.cast', question_id=question.id) }}" method="POST">
 	<input type="hidden" name="pid" value="1234567890" id="pid">
 	{% if answers %}
@@ -36,5 +37,6 @@
 	{% endif %}
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+{% endif %}
 
 {% endblock %}
