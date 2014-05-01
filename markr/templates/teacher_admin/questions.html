@@ -3,36 +3,43 @@
 {% block body %}
 <script src="{{ url_for('static', filename='teacher_admin/questions.js') }}"></script>
     <form role="form">
-        <div class="form-group">
-            <label>Question</label>
-            <textarea class="form-control" rows="3" name="question">{{question.question}}</textarea>
-        </div>
-        <label>Answers</label>
-        <div class="answers">
-            {% for answer, letter in answers %}
+        {% for entry in entries %}
+        <div class="well">
             <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon">{{letter}}</span>
-                    <input type="text" class="form-control" value="{{answer.text}}">
+                <label>Question</label>
+                <textarea class="form-control" rows="3" name="question">{{entry.question.question}}</textarea>
+            </div>
+            <label>Answers</label>
+            <div class="answers">
+                {% for answer, letter in entry.answers %}
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">{{letter}}</span>
+                        <input type="text" class="form-control" value="{{answer.text}}">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <div class="btn-group">
+                    <button class="btn btn-default btn-sm add-answer-btn" type="button">Add Answer</button>
+                    <button class="btn btn-default btn-sm remove-answer-btn" type="button" disabled>Remove Answer</button>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-        <div class="form-group">
+            <div class="form-group">
+                <label>Correct Answer</label>
+                <select class="form-control correct-answers">
+                    <option>No correct answer</option>
+                    {% for answer, letter in entry.answers %}
+                    <option>{{letter}}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <div class="btn-group">
-                <button class="btn btn-default btn-sm add-answer-btn" type="button">Add Answer</button>
-                <button class="btn btn-default btn-sm remove-answer-btn" type="button" disabled>Remove Answer</button>
+                <button class="btn btn-primary btn-sm" type="button">Save Changes</button>
+                <button class="btn btn-danger btn-sm" type="button">Delete Question</button>
             </div>
         </div>
-        <div class="form-group">
-            <label>Correct Answer</label>
-            <select class="form-control correct-answers">
-                <option>No correct answer</option>
-                {% for answer, letter in answers %}
-                <option>{{letter}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <button type="button" class="btn btn-primary">Submit Changes</button>
+        {% endfor %}
     </form>
 {% endblock %}
