@@ -6,8 +6,8 @@ from markr.models import Question, Answer
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
-@teacher_admin.route('/', methods=['GET', 'POST'])
-def index():
+@teacher_admin.route('/<int:lecture_id>/', methods=['GET', 'POST'])
+def questions(lecture_id):
     """
         View function for editing questions in a lecture
     """
@@ -21,7 +21,7 @@ def index():
         question_id = request.form.get("question-id", None, int)
 
         if action == "add":
-            question = Question(question_body, "single_select", 1, 0)
+            question = Question(question_body, "single_select", lecture_id, 0)
             db.session.add(question)
             db.session.commit()
             
@@ -59,7 +59,7 @@ def index():
             db.session.commit()
 
     entries = []
-    questions = db.session.query(Question).filter(Question.lecture_id == 1).all()   
+    questions = db.session.query(Question).filter(Question.lecture_id == lecture_id).all()   
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     for question in questions:
