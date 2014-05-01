@@ -4,6 +4,14 @@ $(function() {
     // Bind the add/remove answer buttons
     $(".add-answer-btn").click(add_answer);
     $(".remove-answer-btn").click(remove_answer);
+
+    $(".well").each(function() {
+        $answers = $(this).find(".answers").children("div")
+        if ($answers.length <= 3) {
+            $(this).find(".remove-answer-btn").prop('disabled', true);
+        }
+    });
+
 });
 
 function add_answer() {
