@@ -45,11 +45,13 @@ class Question(db.Model):
     question = db.Column(db.Text)
     answer_type = db.Column(db.String(50))
     lecture_id = db.Column(db.ForeignKey('lecture.id')) 
+    time_limit = db.Column(db.Integer)
 	
-    def __init__(self, question, answer_type, lecture_id):
+    def __init__(self, question, answer_type, lecture_id, time_limit):
         self.question = question
         self.answer_type = answer_type
         self.lecture_id = lecture_id 
+        self.time_limit = time_limit
         
     def __repr__(self):
         return '<Lecture %r Question %r>' % (self.lecture_id, self.question)
