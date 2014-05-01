@@ -17,12 +17,20 @@ def index():
 @mod_vote.route('/<question_id>', methods=['GET'])
 def vote_question(question_id):
     
+    return_json = request.args.get('resp') == 'json'
     question = Question.query.get(question_id)
     if not question:
         return abort(404)
         
     answers = Answer.query.filter_by(question=question_id)
-        
+    
+    if return_json:
+        data = {
+            'data': [a.serialize for a in answers],
+            'is_multi_select': True if (question.answer_type == 'multi_select') else False
+        }
+        return jsonify(**data)
+    
     return render_template('vote/vote.html', answers=answers, question=question)
     
 @mod_vote.route('/cast/<question_id>', methods=['POST'])

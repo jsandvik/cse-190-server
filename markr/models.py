@@ -67,3 +67,12 @@ class Answer(db.Model):
         
     def __repr__(self):
         return '<Answer %r>' % self.text
+        
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'text': self.text,
+            'question': self.question,
+            'is_correct': self.is_correct
+        }
