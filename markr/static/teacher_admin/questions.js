@@ -13,16 +13,22 @@ function add_answer() {
 
     var num_answers = $answers.length;
     $answer.find("span").html(letters[num_answers]);
-
     $(".answers").append($answer);
+
+    var $option = $(".correct-answers").children("option").last().clone();
+    $option.html(letters[num_answers]);
+    $(".correct-answers").append($option);
+
 }
 
 function remove_answer() {
     var $answers = $(".answers").children("div");
     $answers.last().remove();
 
+    var $option = $(".correct-answers").children("option");
+    $option.last().remove();
+
     if ($answers.length <= 3) {
         $(".remove-answer-btn").prop('disabled', true);
     }
-
 }
