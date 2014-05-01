@@ -12,4 +12,4 @@ class Vote(db.Model):
         self.question_id = question_id
 
     def __repr__(self):
-        return '<%r voted %r>' % self.pid, self.vote
+        return '<%r voted %r>' % (self.pid, self.vote)
