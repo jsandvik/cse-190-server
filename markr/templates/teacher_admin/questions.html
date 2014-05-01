@@ -9,10 +9,10 @@
         </div>
         <label>Answers</label>
         <div class="answers">
-            {% for answer in answers %}
+            {% for answer, letter in answers %}
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon">A</span>
+                    <span class="input-group-addon">{{letter}}</span>
                     <input type="text" class="form-control" value="{{answer.text}}">
                 </div>
             </div>
@@ -28,8 +28,9 @@
             <label>Correct Answer</label>
             <select class="form-control correct-answers">
                 <option>No correct answer</option>
-                <option>A</option>
-                <option>B</option>
+                {% for answer, letter in answers %}
+                <option>{{letter}}</option>
+                {% endfor %}
             </select>
         </div>
         <button type="button" class="btn btn-primary">Submit Changes</button>
