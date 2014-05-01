@@ -4,12 +4,14 @@
 <script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
 <link href="{{ url_for('static', filename='datepicker.css') }}" rel="stylesheet" />
 
+<form role="form" method="post">
 <table class="table">
     <thead>
         <tr>
             <th>Lecture</th>
             <th>Date</th>
-            <th>Questions</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -17,11 +19,13 @@
         <tr>
             <td>Lecture {{loop.index}}</td>
             <td>{{lecture.date}}</td>
-            <td><a href="/admin/questions/{{lecture.id}}/">Edit Lecture</a></td>
+            <td><a href="/admin/questions/{{lecture.id}}/">Edit</a></td>
+            <td><button name="delete-lecture" type="submit" class="btn btn-xs btn-danger" value="{{lecture.id}}">Delete</button></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+</form>
 
 <form role="form" method="post">
     <div class="form-group">
