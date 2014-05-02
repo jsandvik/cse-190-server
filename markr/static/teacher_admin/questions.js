@@ -4,11 +4,19 @@ $(function() {
     // Bind the add/remove answer buttons
     $(".add-answer-btn").click(add_answer);
     $(".remove-answer-btn").click(remove_answer);
+
+    $(".panel-body").each(function() {
+        $answers = $(this).find(".answers").children("div")
+        if ($answers.length <= 3) {
+            $(this).find(".remove-answer-btn").prop('disabled', true);
+        }
+    });
+
 });
 
 function add_answer() {
     // Get the question box
-    var $question_box = $(this).closest(".well");
+    var $question_box = $(this).closest(".panel-body");
 
     var $answers = $question_box.find(".answers");
     var $answer = $answers.children("div").last().clone();
@@ -21,6 +29,7 @@ function add_answer() {
     var $correct_answers = $question_box.find(".correct-answers");
     var $option = $correct_answers.children("option").last().clone();
     $option.html(letters[num_answers]);
+    $option.val(parseInt($option.val()) + 1);
     $correct_answers.append($option);
 
     // Disable the button
@@ -29,7 +38,7 @@ function add_answer() {
 
 function remove_answer() {
     // Get the question box
-    var $question_box = $(this).closest(".well");
+    var $question_box = $(this).closest(".panel-body");
 
     var $answers = $question_box.find(".answers").children("div");
     $answers.last().remove();
