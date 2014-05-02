@@ -125,5 +125,9 @@ def questions(lecture_id):
     entry["answers"] = zip([Answer("", "", 0), Answer("", "", 0)], letters)
     entries.append(entry)
 
+    # Get the section ID
+    section_id = db.session.query(Lecture).filter(Lecture.id == lecture_id).one().sec_id
+
     return render_template("teacher_admin/questions.html", 
-                            entries=entries)
+                            entries=entries,
+                            section_id=section_id)

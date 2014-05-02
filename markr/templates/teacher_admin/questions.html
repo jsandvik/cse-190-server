@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
+<a href="/admin/lectures/{{section_id}}/">Go Back</a>
 <script src="{{ url_for('static', filename='teacher_admin/questions.js') }}"></script>
 <div class="well">
     {% for entry in entries %}
