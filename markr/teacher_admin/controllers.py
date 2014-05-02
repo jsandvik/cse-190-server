@@ -7,6 +7,13 @@ from datetime import datetime, timedelta
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
+@teacher_admin.route('/classes/<int:faculty_id>/', methods=['GET'])
+def classes(faculty_id):
+    """
+        View function for adding and removing classes for a teacher
+    """
+    return render_template("teacher_admin/classes.html")
+
 @teacher_admin.route('/lectures/<int:section_id>/', methods=['GET', 'POST'])
 def lectures(section_id):
     """
