@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, make_response
                   
 from markr import db
-from markr.models import Question, Answer, Lecture
+from markr.models import Question, Answer, Lecture, Class
 from datetime import datetime, timedelta
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
@@ -12,7 +12,10 @@ def classes(faculty_id):
     """
         View function for adding and removing classes for a teacher
     """
-    return render_template("teacher_admin/classes.html")
+
+    classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
+    return render_template("teacher_admin/classes.html",
+                            classes=classes)
 
 @teacher_admin.route('/lectures/<int:section_id>/', methods=['GET', 'POST'])
 def lectures(section_id):
