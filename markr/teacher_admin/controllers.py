@@ -130,9 +130,13 @@ def questions(lecture_id):
     entry["answers"] = zip([Answer("", "", 0), Answer("", "", 0)], letters)
     entries.append(entry)
 
-    # Get the section ID
+    # Get the lecture
     lecture = db.session.query(Lecture).filter(Lecture.id == lecture_id).one()
+
+    # Also get the section
+    section = db.session.query(Class).filter(Class.sec_id == lecture.sec_id).one()
 
     return render_template("teacher_admin/questions.html", 
                             entries=entries,
-                            lecture=lecture)
+                            lecture=lecture,
+                            section=section)

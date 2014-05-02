@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+    <li><a href="/admin/classes/{{section.ucsd_id}}/">Classes</a></li>
+    <li class="active">{{section.course_name}} Lectures</li>
+{% endblock %}
+
 {% block body %}
-<a href="/admin/classes/{{section.ucsd_id}}/">Go Back</a>
 <script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
 <link href="{{ url_for('static', filename='datepicker.css') }}" rel="stylesheet" />
 

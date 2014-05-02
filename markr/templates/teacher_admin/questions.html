@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+    <li><a href="/admin/classes/{{section.ucsd_id}}/">Classes</a></li>
+    <li><a href="/admin/lectures/{{lecture.sec_id}}/">{{section.course_name}} Lectures</a></li>
+    <li class="active">{{lecture.date}} Lecture Questions</li>
+{% endblock %}
+
 {% block body %}
-<a href="/admin/lectures/{{lecture.sec_id}}/">Go Back</a>
 
 <div class="page-header">
   <h1>{{lecture.date}} Lecture</h1>
