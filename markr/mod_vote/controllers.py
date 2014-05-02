@@ -167,7 +167,6 @@ def get_vote_results(question_id):
                 .query(Vote, func.count(Answer).label('total'), 'text') \
                 .filter_by(question_id = question_id) \
                 .join(Answer).group_by(Answer).order_by('total DESC').all()
-    print results
     
     if return_json:
         data['status'] = 'success'
