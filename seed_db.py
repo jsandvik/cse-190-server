@@ -41,7 +41,7 @@ db.session.add(answer_choice_4)
 db.session.commit()
 
 # Second question
-question2 = Question("What do you like about this class", "multi_select", lecture_1.id, 30)
+question2 = Question("What do you like about this class", "multi_select", lecture_1.id, 66)
 db.session.add(question2)
 db.session.commit()
 
