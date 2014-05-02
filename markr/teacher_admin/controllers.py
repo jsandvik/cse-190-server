@@ -2,10 +2,20 @@ from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, make_response
                   
 from markr import db
-from markr.models import Question, Answer, Lecture
+from markr.models import Question, Answer, Lecture, Class
 from datetime import datetime, timedelta
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
+
+@teacher_admin.route('/classes/<int:faculty_id>/', methods=['GET'])
+def classes(faculty_id):
+    """
+        View function for adding and removing classes for a teacher
+    """
+
+    classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
+    return render_template("teacher_admin/classes.html",
+                            classes=classes)
 
 @teacher_admin.route('/lectures/<int:section_id>/', methods=['GET', 'POST'])
 def lectures(section_id):
@@ -43,8 +53,13 @@ def lectures(section_id):
             db.session.commit()
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
+
+    # Get the section the lectures belong to
+    section = db.session.query(Class).filter(Class.sec_id == section_id).one()
+
     return render_template("teacher_admin/lectures.html",
-                            lectures=lectures)
+                            lectures=lectures,
+                            section=section)
 
 @teacher_admin.route('/questions/<int:lecture_id>/', methods=['GET', 'POST'])
 def questions(lecture_id):
@@ -115,5 +130,9 @@ def questions(lecture_id):
     entry["answers"] = zip([Answer("", "", 0), Answer("", "", 0)], letters)
     entries.append(entry)
 
+    # Get the section ID
+    section_id = db.session.query(Lecture).filter(Lecture.id == lecture_id).one().sec_id
+
     return render_template("teacher_admin/questions.html", 
-                            entries=entries)
+                            entries=entries,
+                            section_id=section_id)
