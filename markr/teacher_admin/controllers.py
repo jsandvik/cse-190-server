@@ -53,8 +53,13 @@ def lectures(section_id):
             db.session.commit()
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
+
+    # Get the section ID
+    faculty_id = db.session.query(Class).filter(Class.sec_id == section_id).one().ucsd_id
+
     return render_template("teacher_admin/lectures.html",
-                            lectures=lectures)
+                            lectures=lectures,
+                            faculty_id=faculty_id)
 
 @teacher_admin.route('/questions/<int:lecture_id>/', methods=['GET', 'POST'])
 def questions(lecture_id):
