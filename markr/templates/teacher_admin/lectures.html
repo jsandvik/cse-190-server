@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
 {% block body %}
-<a href="/admin/classes/{{faculty_id}}/">Go Back</a>
+<a href="/admin/classes/{{section.ucsd_id}}/">Go Back</a>
 <script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
 <link href="{{ url_for('static', filename='datepicker.css') }}" rel="stylesheet" />
+
+<div class="page-header">
+  <h1>{{section.course_name}} <small>Quarter/Year to go here</small></h1>
+</div>
 
 <form role="form" method="post">
 <table class="table">
@@ -27,6 +31,10 @@
     </tbody>
 </table>
 </form>
+
+<div class="page-header">
+  <h2>Add Lectures</h2>
+</div>
 
 <form role="form" method="post">
     <div class="form-group">

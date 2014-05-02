@@ -54,12 +54,12 @@ def lectures(section_id):
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
 
-    # Get the section ID
-    faculty_id = db.session.query(Class).filter(Class.sec_id == section_id).one().ucsd_id
+    # Get the section the lectures belong to
+    section = db.session.query(Class).filter(Class.sec_id == section_id).one()
 
     return render_template("teacher_admin/lectures.html",
                             lectures=lectures,
-                            faculty_id=faculty_id)
+                            section=section)
 
 @teacher_admin.route('/questions/<int:lecture_id>/', methods=['GET', 'POST'])
 def questions(lecture_id):
