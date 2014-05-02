@@ -68,7 +68,7 @@ def questions(lecture_id):
         question_id = request.form.get("question-id", None, int)
 
         if action == "add":
-            question = Question(question_body, "single_select", lecture_id, 0)
+            question = Question(question_body, "single_select", lecture_id, 0, True)
             db.session.add(question)
             db.session.commit()
             
@@ -118,7 +118,7 @@ def questions(lecture_id):
 
     # Create a brand new question that can be added by the user
     entry = {}
-    entry["question"] = questions.append(Question("", "single_select", 1, 0))
+    entry["question"] = questions.append(Question("", "single_select", 1, 0, True))
     entry["answers"] = zip([Answer("", "", 0), Answer("", "", 0)], letters)
     entries.append(entry)
 

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, \
                   jsonify, make_response, abort
+from sqlalchemy.sql import func
                   
 from markr import db
 from markr.models import Class, Question, Answer
@@ -147,4 +148,35 @@ def update(question_id):
     else:
         flash('Vote submitted', 'success')
         return redirect(url_for('vote.vote_question', question_id = question_id))
+        
+@mod_vote.route('/results/<question_id>', methods=["GET", "POST"])
+def get_vote_results(question_id):
+    data = {}
+    return_json = request.args.get('resp') == 'json'
+    
+    question = Question.query.get(question_id)
+    if not question:
+        data['status'] = 'error'
+        data['message'] = 'Not a valid question identifier'
+        if return_json:
+            return jsonify(**data)
+        flash(data['message'], 'danger')
+        return redirect(url_for('vote.index'))
+        
+    results = db.session \
+                .query(Vote, func.count(Answer).label('total'), 'text') \
+                .filter_by(question_id = question_id) \
+                .join(Answer).group_by(Answer).order_by('total DESC').all()
+    print results
+    
+    if return_json:
+        data['status'] = 'success'
+        data['results'] = [{'answer': a, 'count': c} for v,c,a in results];
+        return jsonify(**data)
+    else:
+        return render_template('vote/results.html', results = results)
+    
+    
+            
+        
         
