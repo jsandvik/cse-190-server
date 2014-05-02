@@ -131,8 +131,8 @@ def questions(lecture_id):
     entries.append(entry)
 
     # Get the section ID
-    section_id = db.session.query(Lecture).filter(Lecture.id == lecture_id).one().sec_id
+    lecture = db.session.query(Lecture).filter(Lecture.id == lecture_id).one()
 
     return render_template("teacher_admin/questions.html", 
                             entries=entries,
-                            section_id=section_id)
+                            lecture=lecture)
