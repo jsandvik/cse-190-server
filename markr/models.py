@@ -48,14 +48,12 @@ class Question(db.Model):
     question = db.Column(db.Text)
     answer_type = db.Column(db.String(50))
     lecture_id = db.Column(db.ForeignKey('lecture.id')) 
-    time_limit = db.Column(db.Integer)
     show_results = db.Column(db.Boolean)
 	
-    def __init__(self, question, answer_type, lecture_id, time_limit, show_results):
+    def __init__(self, question, answer_type, lecture_id, show_results):
         self.question = question
         self.answer_type = answer_type
         self.lecture_id = lecture_id 
-        self.time_limit = time_limit
         self.show_results = show_results
         
     def __repr__(self):
@@ -68,7 +66,6 @@ class Question(db.Model):
             'text': self.question,
             'answer_type': self.answer_type,
             'lecture_id': self.lecture_id,
-            'time_limit': self.time_limit,
             'show_results': self.show_results
         }
 
