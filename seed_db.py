@@ -26,7 +26,7 @@ db.session.commit()
 
 # First question
 question_str = "Do you want to skip the final this quarter and instead, I just give everyone an A"
-question = Question(question_str, "single_select", lecture_1.id, 10, True)
+question = Question(question_str, "single_select", lecture_1.id, True)
 db.session.add(question)
 db.session.commit()
 
@@ -43,7 +43,7 @@ db.session.commit()
 
 # Second question
 question_str = "What do you like about this class"
-question2 = Question(question_str, "multi_select", lecture_1.id, 66, False)
+question2 = Question(question_str, "multi_select", lecture_1.id, False)
 db.session.add(question2)
 db.session.commit()
 
