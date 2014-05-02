@@ -4,12 +4,15 @@ from markr import db
 class Class(db.Model):
     sec_id = db.Column(db.Integer, primary_key=True)
     course_name = db.Column(db.String(50))
+    quarter = db.Column(db.String(10))
+    year = db.Column(db.Integer)
     ucsd_id = db.Column(db.String(10), db.ForeignKey('faculty.ucsd_id'))
-
     
-    def __init__(self, sec_id, course_name, ucsd_id):
+    def __init__(self, sec_id, course_name, quarter, year, ucsd_id):
         self.sec_id = sec_id
         self.course_name = course_name
+        self.quarter = quarter
+        self.year = year
         self.ucsd_id = ucsd_id
 
     def __repr__(self):
