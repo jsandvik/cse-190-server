@@ -37,6 +37,29 @@
 
 <form role="form" method="post">
     <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6">
+                <label>Class Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <select name="class-name" class="form-control">
+                    <option value="">New name</option>
+                </select>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Copy questions from last quarter I taught this class
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <input type="input" class="form-control" placeholder="Enter new name here">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
         <label>Days of the week</label>
         <select name="schedule" class="form-control">
             <option value="1">M / W / F</option>
@@ -52,6 +75,28 @@
         <label>End Date</label>
         <input id="end-date" name="end-date" type="input" class="form-control">
     </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Year</label>
+                <input id="year" name="year" type="input" class="form-control">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Quarter</label>
+                <select name="quarter" class="form-control">
+                    <option>Fall</option>
+                    <option>Winter</option>
+                    <option>Spring</option>
+                    <option>Summer</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+
     <button type="submit" class="btn btn-primary">Create New Section</button>
 </form>
 
@@ -62,6 +107,11 @@ var start_date = $('#start-date').datepicker().on('changeDate', function(ev) {
 var end_date = $('#end-date').datepicker().on('changeDate', function(ev) {
     end_date.hide();
 }).data('datepicker');
+$("#year").datepicker( {
+    format: "yyyy ",
+    viewMode: "years", 
+    minViewMode: "years"
+});
 </script>
 
 {% endblock %}
