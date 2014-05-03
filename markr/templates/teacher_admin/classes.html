@@ -9,6 +9,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Quarter</th>
             <th>Class</th>
             <th></th>
         </tr>
@@ -16,6 +17,7 @@
     <tbody>
         {% for class in classes %}
         <tr>
+            <td>{{class.quarter}} {{class.year}}</td>
             <td>{{class.course_name}}</td>
             <td><a href="/admin/lectures/{{class.sec_id}}/">Edit</a></td>
         </tr>
