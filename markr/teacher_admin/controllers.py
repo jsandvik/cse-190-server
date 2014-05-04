@@ -7,11 +7,20 @@ from datetime import datetime, timedelta
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
-@teacher_admin.route('/classes/<int:faculty_id>/', methods=['GET'])
+@teacher_admin.route('/classes/<int:faculty_id>/', methods=['GET', 'POST'])
 def classes(faculty_id):
     """
         View function for adding and removing classes for a teacher
     """
+    if request.method == "POST":
+        class_name = request.form.get("class-name", "", str)
+        quarter = request.form.get("quarter", "", str)
+        year = request.form.get("year", 0, int)
+        section_id = request.form.get("section-id", 0, int)
+
+        section = Class(section_id, class_name, quarter, year, faculty_id)
+        db.session.add(section)
+        db.session.commit()
 
     classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
 
