@@ -14,8 +14,11 @@ def classes(faculty_id):
     """
 
     classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
+
+    unique_class_names = [x[0] for x in db.session.query(Class.course_name).distinct()]
     return render_template("teacher_admin/classes.html",
-                            classes=classes)
+                            classes=classes,
+                            unique_class_names=unique_class_names)
 
 @teacher_admin.route('/lectures/<int:section_id>/', methods=['GET', 'POST'])
 def lectures(section_id):

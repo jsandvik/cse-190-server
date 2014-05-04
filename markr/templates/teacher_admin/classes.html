@@ -46,6 +46,9 @@
             <div class="col-sm-6">
                 <select name="class-name" class="form-control">
                     <option value="">New name</option>
+                    {% for class_name in unique_class_names %}
+                    <option>{{class_name}}</option>
+                    {% endfor %}
                 </select>
                 <div class="checkbox">
                     <label>
@@ -98,8 +101,6 @@
             </div>
         </div>
     </div>
-
-
 
     <button type="submit" class="btn btn-primary">Create New Section</button>
 </form>
