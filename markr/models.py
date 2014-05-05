@@ -40,6 +40,14 @@ class Lecture(db.Model):
     def __repr__(self):
         return '<Lecture on %r>' % (self.date)
 
+    @property
+    def serialize(self):
+        return {
+            'date': str(self.date),
+            'sec_id': self.sec_id,
+            'id': self.id,
+        }
+
 class Access(db.Model):
     id = db.Column(db.Integer, primary_key=True) # need to specify primary key for table
     class_date = db.Column(db.DateTime)
