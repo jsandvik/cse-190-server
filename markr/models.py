@@ -17,6 +17,16 @@ class Class(db.Model):
 
     def __repr__(self):
         return '<%r Class %r %r>' % (self.sec_id, self.course_name, self.ucsd_id)
+
+    @property
+    def serialize(self):
+        return {
+            'sec_id': self.sec_id,
+            'course_name': self.course_name,
+            'quarter': self.quarter,
+            'year': self.year,
+            'ucsd_id': self.ucsd_id
+        }
         
 class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True)
