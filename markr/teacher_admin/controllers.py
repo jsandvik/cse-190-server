@@ -18,6 +18,9 @@ def classes(faculty_id):
         year = request.form.get("year", 0, int)
         section_id = request.form.get("section-id", 0, int)
 
+        if not class_name:
+            class_name = request.form.get("new-class-name", "", str)
+
         section = Class(section_id, class_name, quarter, year, faculty_id)
         db.session.add(section)
         db.session.commit()
