@@ -21,32 +21,33 @@ def classes(faculty_id):
         if not class_name:
             class_name = request.form.get("new-class-name", "", str)
 
-        section = Class(section_id, class_name, quarter, year, faculty_id)
-        db.session.add(section)
-        db.session.commit()
+        if class_name and quarter and year and section_id:
+            section = Class(section_id, class_name, quarter, year, faculty_id)
+            db.session.add(section)
+            db.session.commit()
 
-        schedule = request.form.get("schedule", 0, int)
-        state_date_str = request.form.get("start-date", "", str)
-        end_date_str = request.form.get("end-date", "", str)
-        start_date = datetime.strptime(state_date_str, "%m/%d/%Y")        
-        end_date = datetime.strptime(end_date_str, "%m/%d/%Y")
-        step = timedelta(days=1)
+            schedule = request.form.get("schedule", 0, int)
+            state_date_str = request.form.get("start-date", "", str)
+            end_date_str = request.form.get("end-date", "", str)
+            start_date = datetime.strptime(state_date_str, "%m/%d/%Y")        
+            end_date = datetime.strptime(end_date_str, "%m/%d/%Y")
+            step = timedelta(days=1)
 
-        dates = []
-        while start_date <= end_date:
-            weekday = start_date.weekday()
-            if schedule == 1 and (weekday == 0 or weekday == 2 or weekday == 4):
-                dates.append(start_date)
-            elif schedule == 2 and (weekday == 1 or weekday == 3):
-                dates.append(start_date)
-            elif schedule == 3 and (weekday == 0 or weekday == 2):
-                dates.append(start_date)
-            start_date += step
+            dates = []
+            while start_date <= end_date:
+                weekday = start_date.weekday()
+                if schedule == 1 and (weekday == 0 or weekday == 2 or weekday == 4):
+                    dates.append(start_date)
+                elif schedule == 2 and (weekday == 1 or weekday == 3):
+                    dates.append(start_date)
+                elif schedule == 3 and (weekday == 0 or weekday == 2):
+                    dates.append(start_date)
+                start_date += step
 
-        for date in dates:
-            lecture = Lecture(date, section_id)
-            db.session.add(lecture)
-        db.session.commit()
+            for date in dates:
+                lecture = Lecture(date, section_id)
+                db.session.add(lecture)
+            db.session.commit()
 
     classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
 
