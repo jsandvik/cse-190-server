@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 
-{% block body %}
+{% block navbar %}
+    <li class="active">Classes</li>
+{% endblock %}
 
+{% block body %}
+<script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
+<link href="{{ url_for('static', filename='datepicker.css') }}" rel="stylesheet" />
+
+<div class="page-header">
+  <h1>Sections</h1>
+</div>
 
 <table class="table">
     <thead>
         <tr>
+            <th>Quarter</th>
             <th>Class</th>
             <th></th>
         </tr>
@@ -13,11 +23,106 @@
     <tbody>
         {% for class in classes %}
         <tr>
+            <td>{{class.quarter}} {{class.year}}</td>
             <td>{{class.course_name}}</td>
             <td><a href="/admin/lectures/{{class.sec_id}}/">Edit</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<div class="page-header">
+  <h2>Create new section</h2>
+</div>
+
+<form role="form" method="post">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6">
+                <label>Class Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <select name="class-name" class="form-control">
+                    <option value="">New name</option>
+                    {% for class_name in unique_class_names %}
+                    <option>{{class_name}}</option>
+                    {% endfor %}
+                </select>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Copy questions from last quarter I taught this class
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <input type="input" class="form-control" placeholder="Enter new name here">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-4">
+                <label>Days</label>
+                <select name="schedule" class="form-control">
+                    <option value="1">M / W / F</option>
+                    <option value="2">Tu / Th</option>
+                    <option value="3">M / W</option>
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <label>Start Date</label>
+                <input id="start-date" name="start-date" type="input" class="form-control">
+            </div>
+            <div class="col-xs-4">
+                <label>End Date</label>
+                <input id="end-date" name="end-date" type="input" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Section ID</label>
+                <input name="section-id" type="input" class="form-control">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Year</label>
+                <input id="year" name="year" type="input" class="form-control">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Quarter</label>
+                <select name="quarter" class="form-control">
+                    <option>Fall</option>
+                    <option>Winter</option>
+                    <option>Spring</option>
+                    <option>Summer</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create New Section</button>
+</form>
+
+<script>
+var start_date = $('#start-date').datepicker().on('changeDate', function(ev) {
+    start_date.hide();
+}).data('datepicker');
+var end_date = $('#end-date').datepicker().on('changeDate', function(ev) {
+    end_date.hide();
+}).data('datepicker');
+$("#year").datepicker( {
+    format: "yyyy ",
+    viewMode: "years", 
+    minViewMode: "years"
+});
+</script>
 
 {% endblock %}

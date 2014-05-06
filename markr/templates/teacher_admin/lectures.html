@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+    <li><a href="/admin/classes/{{section.ucsd_id}}/">Classes</a></li>
+    <li class="active">{{section.course_name}} Lectures</li>
+{% endblock %}
+
 {% block body %}
-<a href="/admin/classes/{{section.ucsd_id}}/">Go Back</a>
 <script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
 <link href="{{ url_for('static', filename='datepicker.css') }}" rel="stylesheet" />
 
 <div class="page-header">
-  <h1>{{section.course_name}} <small>Quarter/Year to go here</small></h1>
+  <h1>{{section.course_name}} <small>{{section.quarter}} {{section.year}}</small></h1>
 </div>
 
 <form role="form" method="post">
@@ -31,39 +35,5 @@
     </tbody>
 </table>
 </form>
-
-<div class="page-header">
-  <h2>Add Lectures</h2>
-</div>
-
-<form role="form" method="post">
-    <div class="form-group">
-        <label>Days of the week</label>
-        <select name="schedule" class="form-control">
-            <option value="1">M / W / F</option>
-            <option value="2">Tu / Th</option>
-            <option value="3">M / W</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Start Date</label>
-        <input id="start-date" name="start-date" type="input" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>End Date</label>
-        <input id="end-date" name="end-date" type="input" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">Create Lectures</button>
-
-</form>
-
-<script>
-var start_date = $('#start-date').datepicker().on('changeDate', function(ev) {
-    start_date.hide();
-}).data('datepicker');
-var end_date = $('#end-date').datepicker().on('changeDate', function(ev) {
-    end_date.hide();
-}).data('datepicker');
-</script>
 
 {% endblock %}

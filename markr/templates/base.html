@@ -24,6 +24,9 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     
+    <ol class="breadcrumb">
+      {% block navbar %}{% endblock %}
+    </ol>
 	  <div class="container">
 	  	{% block body %}{% endblock %}
 	  </div>

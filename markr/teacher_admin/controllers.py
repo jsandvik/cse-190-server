@@ -7,15 +7,50 @@ from datetime import datetime, timedelta
 
 teacher_admin = Blueprint('teacher_admin', __name__, url_prefix='/admin')
 
-@teacher_admin.route('/classes/<int:faculty_id>/', methods=['GET'])
+@teacher_admin.route('/classes/<int:faculty_id>/', methods=['GET', 'POST'])
 def classes(faculty_id):
     """
         View function for adding and removing classes for a teacher
     """
+    if request.method == "POST":
+        class_name = request.form.get("class-name", "", str)
+        quarter = request.form.get("quarter", "", str)
+        year = request.form.get("year", 0, int)
+        section_id = request.form.get("section-id", 0, int)
+
+        section = Class(section_id, class_name, quarter, year, faculty_id)
+        db.session.add(section)
+        db.session.commit()
+
+        schedule = request.form.get("schedule", 0, int)
+        state_date_str = request.form.get("start-date", "", str)
+        end_date_str = request.form.get("end-date", "", str)
+        start_date = datetime.strptime(state_date_str, "%m/%d/%Y")        
+        end_date = datetime.strptime(end_date_str, "%m/%d/%Y")
+        step = timedelta(days=1)
+
+        dates = []
+        while start_date <= end_date:
+            weekday = start_date.weekday()
+            if schedule == 1 and (weekday == 0 or weekday == 2 or weekday == 4):
+                dates.append(start_date)
+            elif schedule == 2 and (weekday == 1 or weekday == 3):
+                dates.append(start_date)
+            elif schedule == 3 and (weekday == 0 or weekday == 2):
+                dates.append(start_date)
+            start_date += step
+
+        for date in dates:
+            lecture = Lecture(date, section_id)
+            db.session.add(lecture)
+        db.session.commit()
 
     classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
+
+    unique_class_names = [x[0] for x in db.session.query(Class.course_name).distinct()]
     return render_template("teacher_admin/classes.html",
-                            classes=classes)
+                            classes=classes,
+                            unique_class_names=unique_class_names)
 
 @teacher_admin.route('/lectures/<int:section_id>/', methods=['GET', 'POST'])
 def lectures(section_id):
@@ -28,29 +63,7 @@ def lectures(section_id):
             lecture = db.session.query(Lecture).filter(Lecture.id == lecture_id).one()
             db.session.delete(lecture)
             db.session.commit()
-        else:
-            schedule = request.form.get("schedule", 0, int)
-            state_date_str = request.form.get("start-date", "", str)
-            end_date_str = request.form.get("end-date", "", str)
-            start_date = datetime.strptime(state_date_str, "%m/%d/%Y")        
-            end_date = datetime.strptime(end_date_str, "%m/%d/%Y")
-            step = timedelta(days=1)
 
-            dates = []
-            while start_date <= end_date:
-                weekday = start_date.weekday()
-                if schedule == 1 and (weekday == 0 or weekday == 2 or weekday == 4):
-                    dates.append(start_date)
-                elif schedule == 2 and (weekday == 1 or weekday == 3):
-                    dates.append(start_date)
-                elif schedule == 3 and (weekday == 0 or weekday == 2):
-                    dates.append(start_date)
-                start_date += step
-
-            for date in dates:
-                lecture = Lecture(date, 123)
-                db.session.add(lecture)
-            db.session.commit()
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
 
@@ -130,9 +143,13 @@ def questions(lecture_id):
     entry["answers"] = zip([Answer("", "", 0), Answer("", "", 0)], letters)
     entries.append(entry)
 
-    # Get the section ID
-    section_id = db.session.query(Lecture).filter(Lecture.id == lecture_id).one().sec_id
+    # Get the lecture
+    lecture = db.session.query(Lecture).filter(Lecture.id == lecture_id).one()
+
+    # Also get the section
+    section = db.session.query(Class).filter(Class.sec_id == lecture.sec_id).one()
 
     return render_template("teacher_admin/questions.html", 
                             entries=entries,
-                            section_id=section_id)
+                            lecture=lecture,
+                            section=section)

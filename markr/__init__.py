@@ -14,12 +14,14 @@ db = SQLAlchemy(app)
 # (mod_auth)
 from markr.mod_auth.controllers import mod_auth as auth_module
 from markr.mod_vote.controllers import mod_vote as vote_module
-from markr.teacher_admin.controllers import teacher_admin as teacher_module
 from markr.mod_notifications import mod_notifications as notification_module
+from markr.teacher_admin.controllers import teacher_admin as teacher_admin_module
+from markr.teacher.controllers import teacher as teacher_module
 
 # Register blueprints
 app.register_blueprint(auth_module)
 app.register_blueprint(vote_module)
+app.register_blueprint(teacher_admin_module)
 app.register_blueprint(teacher_module)
 
 # if __name__ == '__main__':
