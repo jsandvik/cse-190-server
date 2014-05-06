@@ -4,7 +4,7 @@ from markr import db
 class Class(db.Model):
     sec_id = db.Column(db.Integer, primary_key=True)
     course_name = db.Column(db.String(50))
-    quarter = db.Column(db.String(10))
+    quarter = db.Column(db.Enum("Winter", "Spring", "Summer", "Fall", name="quarter"))
     year = db.Column(db.Integer)
     ucsd_id = db.Column(db.String(10), db.ForeignKey('faculty.ucsd_id'))
     

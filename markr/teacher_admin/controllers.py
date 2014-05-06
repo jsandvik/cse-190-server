@@ -49,7 +49,7 @@ def classes(faculty_id):
                 db.session.add(lecture)
             db.session.commit()
 
-    classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).all()
+    classes = db.session.query(Class).filter(Class.ucsd_id == faculty_id).order_by(Class.year.asc(), Class.quarter.asc()).all()
 
     unique_class_names = [x[0] for x in db.session.query(Class.course_name).distinct()]
     return render_template("teacher_admin/classes.html",
