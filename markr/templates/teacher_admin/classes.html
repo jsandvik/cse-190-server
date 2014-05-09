@@ -44,7 +44,7 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <select name="class-name" class="form-control">
+                <select id="class-name" name="class-name" class="form-control">
                     <option value="">New name</option>
                     {% for class_name in unique_class_names %}
                     <option>{{class_name}}</option>
@@ -52,12 +52,12 @@
                 </select>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> Copy questions from last quarter I taught this class
+                        <input id="checkbox" type="checkbox" disabled> Copy questions from last quarter I taught this class
                     </label>
                 </div>
             </div>
             <div class="col-sm-6">
-                <input name="new-class-name" type="input" class="form-control" placeholder="Enter new name here">
+                <input id="new-class-name" name="new-class-name" type="input" class="form-control" placeholder="Enter new name here">
             </div>
         </div>
     </div>
@@ -122,6 +122,17 @@ $("#year").datepicker( {
     format: "yyyy ",
     viewMode: "years", 
     minViewMode: "years"
+});
+
+$("#class-name").bind("change", function() {
+    if ($(this).val() == "") {
+        $('#checkbox').removeAttr("checked");
+        $('#checkbox').prop('disabled', true);
+        $('#new-class-name').prop('disabled', false);
+    } else {
+        $('#new-class-name').prop('disabled', true);
+        $('#checkbox').prop('disabled', false);
+    }
 });
 </script>
 
