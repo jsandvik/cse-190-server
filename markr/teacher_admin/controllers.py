@@ -153,7 +153,23 @@ def questions(lecture_id):
     # Also get the section
     section = db.session.query(Class).filter(Class.sec_id == lecture.sec_id).one()
 
+    # Get the previous and next lectures for navigation
+    all_lectures = db.session.query(Lecture).filter(Lecture.sec_id == lecture.sec_id).order_by(Lecture.date.asc()).all()
+
+    for i, entry in enumerate(all_lectures):
+        if entry.id == lecture.id:
+            if i - 1 >= 0:
+                previous_lecture = all_lectures[i - 1]
+            else:
+                previous_lecture = None
+            if i + 1 < len(all_lectures):
+                next_lecture = all_lectures[i + 1]
+            else:
+                next_lecture = None
+
     return render_template("teacher_admin/questions.html", 
                             entries=entries,
                             lecture=lecture,
+                            previous_lecture=previous_lecture,
+                            next_lecture=next_lecture,
                             section=section)

@@ -13,7 +13,6 @@
 </div>
 
 <script src="{{ url_for('static', filename='teacher_admin/questions.js') }}"></script>
-<div class="well">
     {% for entry in entries %}
     <form role="form" method="post">
         <div class="panel panel-default">
@@ -72,5 +71,12 @@
         </div>
     </form>
     {% endfor %}
-    </div>
+<ul class="pager">
+    {% if previous_lecture %}
+        <li class="previous"><a href="/admin/questions/{{previous_lecture.id}}">&larr; Older Lecture</a></li>
+    {% endif %}
+    {% if next_lecture %}
+        <li class="next"><a href="/admin/questions/{{next_lecture.id}}">Newer Lecture &rarr;</a></li>
+    {% endif %}
+</ul>
 {% endblock %}
