@@ -28,7 +28,7 @@
         {% for lecture in lectures %}
         <tr>
             <td>Lecture {{loop.index}}</td>
-            <td>{{lecture.date}}</td>
+            <td>{{lecture.date.strftime('%B %d, %Y (%a)')}}</td>
             <td><div class="text-center">{{lecture.count}}</div></td>
             <td><a href="/admin/questions/{{lecture.id}}/">Edit</a></td>
             <td><button name="delete-lecture" type="submit" class="btn btn-xs btn-danger" value="{{lecture.id}}">Delete</button></td>

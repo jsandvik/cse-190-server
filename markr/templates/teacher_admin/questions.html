@@ -3,13 +3,13 @@
 {% block navbar %}
     <li><a href="/admin/classes/{{section.ucsd_id}}/">Classes</a></li>
     <li><a href="/admin/lectures/{{lecture.sec_id}}/">{{section.course_name}} Lectures</a></li>
-    <li class="active">{{lecture.date}} Lecture Questions</li>
+    <li class="active">{{lecture.date.strftime('%A, %B %d')}} Lecture Questions</li>
 {% endblock %}
 
 {% block body %}
 
 <div class="page-header">
-  <h1>{{lecture.date}} Lecture</h1>
+  <h1>{{lecture.date.strftime('%A, %B %d')}} Lecture</h1>
 </div>
 
 <script src="{{ url_for('static', filename='teacher_admin/questions.js') }}"></script>
