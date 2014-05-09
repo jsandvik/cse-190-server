@@ -71,6 +71,10 @@ def lectures(section_id):
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
 
+    for lecture in lectures:
+        questions = db.session.query(Question).filter(Question.lecture_id == lecture.id).all()
+        lecture.count = len(questions)
+
     # Get the section the lectures belong to
     section = db.session.query(Class).filter(Class.sec_id == section_id).one()
 
