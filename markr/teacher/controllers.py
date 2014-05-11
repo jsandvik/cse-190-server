@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from markr import db
-from markr.models import Class, Lecture, Question
+from markr.models import Class, Lecture, Question, Answer
 
 teacher = Blueprint('teacher', __name__, url_prefix='/teacher')
 
@@ -39,6 +39,10 @@ def get_questions(lecture_id):
     """
     questions = db.session.query(Question).filter(Question.lecture_id == lecture_id).all()
     questions = [x.serialize for x in questions]
+
+    for question in questions:
+        answers = db.session.query(Answer).filter(Answer.question == question.id).all()
+        question["number_of_options"] = len(answers)
 
     data = {
         "data" : questions
