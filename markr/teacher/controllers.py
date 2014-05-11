@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from markr import db
-from markr.models import Class, Lecture
+from markr.models import Class, Lecture, Question
 
 teacher = Blueprint('teacher', __name__, url_prefix='/teacher')
 
