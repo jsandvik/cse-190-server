@@ -31,3 +31,16 @@ def get_lectures(section_id):
         "data" : lectures
     }
     return jsonify(data)
+
+@teacher.route('/questions/<int:lecture_id>/', methods=['GET'])
+def get_questions(lecture_id):
+    """
+        This returns a json response of all the questions for a given lecture.
+    """
+    questions = db.session.query(Question).filter(Question.lecture_id == lecture_id).all()
+    questions = [x.serialize for x in questions]
+
+    data = {
+        "data" : questions
+    }
+    return jsonify(data)
