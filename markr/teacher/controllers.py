@@ -41,7 +41,7 @@ def get_questions(lecture_id):
     questions = [x.serialize for x in questions]
 
     for question in questions:
-        answers = db.session.query(Answer).filter(Answer.question == question.id).all()
+        answers = Answer.query.filter_by(question=question["id"]).all()
         question["number_of_options"] = len(answers)
 
     data = {
