@@ -15,18 +15,23 @@ def classes(faculty_id):
     if request.method == "POST":
         class_name = request.form.get("class-name", "", str)
         quarter = request.form.get("quarter", "", str)
+        days_of_week = request.form.get("schedule", "", str)
+        start_time_str = request.form.get("start-time", "", str)
+        end_time_str = request.form.get("end-time", "", str)
         year = request.form.get("year", 0, int)
         section_id = request.form.get("section-id", 0, int)
 
         if not class_name:
             class_name = request.form.get("new-class-name", "", str)
 
-        if class_name and quarter and year and section_id:
-            section = Class(section_id, class_name, quarter, year, faculty_id)
+        if class_name and quarter and year and section_id and days_of_week and start_time_str and end_time_str:
+            start_time = datetime.strptime(start_time_str, '%I:%M %p').time()
+            end_time = datetime.strptime(end_time_str, '%I:%M %p').time()
+
+            section = Class(section_id, class_name, quarter, year, days_of_week, start_time, end_time, faculty_id)
             db.session.add(section)
             db.session.commit()
 
-            schedule = request.form.get("schedule", 0, int)
             state_date_str = request.form.get("start-date", "", str)
             end_date_str = request.form.get("end-date", "", str)
             start_date = datetime.strptime(state_date_str, "%m/%d/%Y")        
@@ -36,11 +41,11 @@ def classes(faculty_id):
             dates = []
             while start_date <= end_date:
                 weekday = start_date.weekday()
-                if schedule == 1 and (weekday == 0 or weekday == 2 or weekday == 4):
+                if days_of_week == "M/W/F" and (weekday == 0 or weekday == 2 or weekday == 4):
                     dates.append(start_date)
-                elif schedule == 2 and (weekday == 1 or weekday == 3):
+                elif days_of_week == "Tu/Th" and (weekday == 1 or weekday == 3):
                     dates.append(start_date)
-                elif schedule == 3 and (weekday == 0 or weekday == 2):
+                elif days_of_week == "M/W" and (weekday == 0 or weekday == 2):
                     dates.append(start_date)
                 start_date += step
 
