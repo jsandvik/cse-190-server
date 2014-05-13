@@ -6,13 +6,19 @@ class Class(db.Model):
     course_name = db.Column(db.String(50))
     quarter = db.Column(db.Enum("Winter", "Spring", "Summer", "Fall", name="quarter"))
     year = db.Column(db.Integer)
+    days_of_week = db.Column(db.Enum("M/W/F", "M/W", "Tu/Th", name="days_of_week"))
+    start_time = db.Column(db.Time)
+    end_time = db.Column(db.Time)
     ucsd_id = db.Column(db.String(10), db.ForeignKey('faculty.ucsd_id'))
     
-    def __init__(self, sec_id, course_name, quarter, year, ucsd_id):
+    def __init__(self, sec_id, course_name, quarter, year, days_of_week, start_time, end_time, ucsd_id):
         self.sec_id = sec_id
         self.course_name = course_name
         self.quarter = quarter
         self.year = year
+        self.days_of_week = days_of_week
+        self.start_time = start_time
+        self.end_time = end_time
         self.ucsd_id = ucsd_id
 
     def __repr__(self):

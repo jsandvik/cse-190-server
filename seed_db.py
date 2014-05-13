@@ -12,7 +12,7 @@ teacher = Faculty('628191', 'Ganz', '', 'Chockalingham')
 db.session.add(teacher)
 db.session.commit()
 
-course = Class(123, "Mobile Programming", "Spring", 2014, teacher.ucsd_id)
+course = Class(123, "Mobile Programming", "Spring", 2014, "Tu/Th", datetime.time(12, 30), datetime.time(13, 50), teacher.ucsd_id)
 db.session.add(course)
 db.session.commit()
 
