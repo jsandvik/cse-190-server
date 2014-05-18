@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-<script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
-<link href="{{ url_for('static', filename='datepicker.css') }}" rel="stylesheet" />
+<script src="{{ url_for('static', filename='bootstrap-datetimepicker.min.js') }}"></script>
+<link href="{{ url_for('static', filename='bootstrap-datetimepicker.min.css') }}" rel="stylesheet" />
 
 <div class="page-header">
   <h1>Sections</h1>
@@ -73,16 +73,44 @@
                 </select>
             </div>
             <div class="col-xs-4">
-                <label>Start Date</label>
-                <input id="start-date" name="start-date" type="input" class="form-control">
+                <label>Start Time</label>
+                <div id="start-time" class="input-group input-append">
+                    <input data-format="HH:mm PP" id="start-time" name="start-time" type="input" class="form-control">
+                    <span class="input-group-addon add-on">
+                        <i class="glyphicon glyphicon-time"></i>
+                    </span>
+                </div>
             </div>
             <div class="col-xs-4">
-                <label>End Date</label>
-                <input id="end-date" name="end-date" type="input" class="form-control">
+                <label>End Time</label>
+                <div id="end-time" class="input-group input-append">
+                    <input data-format="HH:mm PP" id="end-time" name="end-time" type="input" class="form-control">
+                    <span class="input-group-addon add-on">
+                        <i class="glyphicon glyphicon-time"></i>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-3">
+            <label>Start Date</label>
+            <div id="start-date" class="input-group input-append">
+                <input id="start-date" name="start-date" type="input" class="form-control">
+                <span class="input-group-addon add-on">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-3">
+                <label>End Date</label>
+                <div id="end-date" class="input-group input-append">
+                    <input id="end-date" name="end-date" type="input" class="form-control">
+                    <span class="input-group-addon add-on">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </span>
+                </div>
+        </div>
         <div class="col-sm-2">
             <div class="form-group">
                 <label>Section ID</label>
@@ -112,28 +140,26 @@
 </form>
 
 <script>
-var start_date = $('#start-date').datepicker().on('changeDate', function(ev) {
-    start_date.hide();
-}).data('datepicker');
-var end_date = $('#end-date').datepicker().on('changeDate', function(ev) {
-    end_date.hide();
-}).data('datepicker');
-$("#year").datepicker( {
-    format: "yyyy ",
-    viewMode: "years", 
-    minViewMode: "years"
+
+$(function() {
+    $('#start-time').datetimepicker({pickDate: false, pick12HourFormat: true, pickSeconds: false});
+    $('#end-time').datetimepicker({pickDate: false, pick12HourFormat: true, pickSeconds: false});
+    $("#start-date").datetimepicker({pickTime: false})
+    $("#end-date").datetimepicker({pickTime: false})
+
+    $("#class-name").bind("change", function() {
+        if ($(this).val() == "") {
+            $('#checkbox').removeAttr("checked");
+            $('#checkbox').prop('disabled', true);
+            $('#new-class-name').prop('disabled', false);
+        } else {
+            $('#new-class-name').prop('disabled', true);
+            $('#checkbox').prop('disabled', false);
+        }
+    });
 });
 
-$("#class-name").bind("change", function() {
-    if ($(this).val() == "") {
-        $('#checkbox').removeAttr("checked");
-        $('#checkbox').prop('disabled', true);
-        $('#new-class-name').prop('disabled', false);
-    } else {
-        $('#new-class-name').prop('disabled', true);
-        $('#checkbox').prop('disabled', false);
-    }
-});
+
 </script>
 
 {% endblock %}
