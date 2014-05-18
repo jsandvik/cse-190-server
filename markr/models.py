@@ -31,6 +31,9 @@ class Class(db.Model):
             'course_name': self.course_name,
             'quarter': self.quarter,
             'year': self.year,
+            'days_of_week': self.days_of_week,
+            'start_time': self.start_time.strftime("%I:%M %p"),
+            'end_time': self.end_time.strftime("%I:%M %p"),
             'ucsd_id': self.ucsd_id
         }
         
