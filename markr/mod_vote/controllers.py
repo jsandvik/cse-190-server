@@ -164,10 +164,11 @@ def get_vote_results(question_id):
         return redirect(url_for('vote.index'))
         
     results = db.session \
-                .query(Vote, func.count(Answer).label('total'), 'text') \
-                .filter_by(question_id = question_id) \
-                .join(Answer).group_by(Answer).order_by('total DESC').all()
+                .query(Answer, func.count(Vote.id).label('total'), 'text') \
+                .filter_by(question = question_id) \
+                .outerjoin(Vote).group_by(Answer).order_by('total DESC').all()
     
+    print results
     if return_json:
         data['status'] = 'success'
         data['results'] = [{'answer': a, 'count': c} for v,c,a in results];
