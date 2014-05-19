@@ -2,6 +2,7 @@ from markr import db
 from markr.models import Class, Question, Answer, Lecture
 
 from markr.mod_auth.models import Faculty, Student
+from markr.mod_vote.models import Vote
 
 import datetime
 
@@ -67,6 +68,10 @@ db.session.add(student_1)
 db.session.add(student_2)
 db.session.commit()
 
+# Votes
+vote = Vote(1, "1234567890", 1)
+db.session.add(vote)
+db.session.commit()
 
 print "DATABASE SEEDED!"
 # teachers = Faculty.query.all()
