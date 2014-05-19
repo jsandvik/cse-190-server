@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
-from markr import db
-from markr.models import Class, Lecture, Question, Answer
+from markr.mod_vote.models import Vote
+from markr.models import Question, Lecture, Class
 
 student = Blueprint('student', __name__, url_prefix='/student')
 
@@ -10,9 +10,23 @@ def get_classes(student_id):
         This returns a json response of all the classes that the 
         given student has voted in
     """
+    votes = Vote.query.filter_by(pid=student_id)
 
+    questions = []
+    for vote in votes:
+        questions.extend(Question.query.filter_by(id=vote.question_id))
+
+    lectures = []
+    for question in questions:
+        lectures.extend(Lecture.query.filter_by(id=question.lecture_id))
+
+    sections = []
+    for lecture in lectures:
+        sections.extend(Class.query.filter_by(sec_id=lecture.sec_id))
+
+    sections = [x.serialize for x in sections]
     data = {
-        "data" : []
+        "data" : sections
     }
 
     return jsonify(data)
