@@ -30,3 +30,27 @@ def get_classes(student_id):
     }
 
     return jsonify(data)
+
+@student.route('/lectures/<student_id>/<class_id>/', methods=["GET"])
+def get_lectures(student_id, class_id):
+    """
+        This returns a json response of all the lectures of a given class 
+        that a student has votes in.
+    """
+
+    votes = Vote.query.filter_by(pid=student_id)
+
+    questions = []
+    for vote in votes:
+        questions.extend(Question.query.filter_by(id=vote.question_id))
+
+    lectures = []
+    for question in questions:
+        lectures.extend(Lecture.query.filter_by(id=question.lecture_id, sec_id=class_id))
+
+    lectures = [x.serialize for x in lectures]
+    data = {
+        "data" : lectures
+    }
+
+    return jsonify(data)
