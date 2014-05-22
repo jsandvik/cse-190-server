@@ -24,7 +24,14 @@ def get_classes(student_id):
     for lecture in lectures:
         sections.extend(Class.query.filter_by(sec_id=lecture.sec_id))
 
-    sections = [x.serialize for x in sections]
+    unique_sections = []
+    section_ids = []
+    for section in sections:
+        if section.sec_id not in section_ids:
+            section_ids.append(section.sec_id)
+            unique_sections.append(section)
+
+    sections = [x.serialize for x in unique_sections]
     data = {
         "data" : sections
     }

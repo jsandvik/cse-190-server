@@ -68,11 +68,18 @@ def lectures(section_id):
     """
     if request.method == "POST":
         lecture_id = request.form.get("delete-lecture", None, int)
+        add_lecture = request.form.get("add-lecture", None, int)
         if lecture_id != None:
             lecture = db.session.query(Lecture).filter(Lecture.id == lecture_id).one()
             db.session.delete(lecture)
             db.session.commit()
 
+        if add_lecture != None:
+            date_str = request.form.get("date", "", str)
+            date = datetime.strptime(date_str, "%m/%d/%Y")
+            lecture = Lecture(date, section_id)
+            db.session.add(lecture)
+            db.session.commit()
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
 
