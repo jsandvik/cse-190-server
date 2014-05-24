@@ -68,3 +68,25 @@ def get_lectures(student_id, class_id):
     }
 
     return jsonify(data)
+
+@student.route('/questions/<student_id>/<lecture_id>/', methods=["GET"])
+def get_questions(student_id, lecture_id):
+    votes = Vote.query.filter_by(pid=student_id)
+
+    questions = []
+    for vote in votes:
+        questions.extend(Question.query.filter_by(id=vote.question_id, lecture_id=lecture_id))
+
+    unique_questions = []
+    question_ids = []
+    for question in questions:
+        if question.id not in question_ids:
+            question_ids.append(question.id)
+            unique_questions.append(question)
+
+    questions = [x.serialize for x in unique_questions]
+    data = {
+        "data" : questions
+    }
+
+    return jsonify(data)
