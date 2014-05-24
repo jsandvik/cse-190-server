@@ -55,7 +55,14 @@ def get_lectures(student_id, class_id):
     for question in questions:
         lectures.extend(Lecture.query.filter_by(id=question.lecture_id, sec_id=class_id))
 
-    lectures = [x.serialize for x in lectures]
+    unique_lectures = []
+    lecture_ids = []
+    for lecture in lectures:
+        if lecture.id not in lecture_ids:
+            lecture_ids.append(lecture.id)
+            unique_lectures.append(lecture)
+
+    lectures = [x.serialize for x in unique_lectures]
     data = {
         "data" : lectures
     }
