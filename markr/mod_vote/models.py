@@ -13,3 +13,12 @@ class Vote(db.Model):
 
     def __repr__(self):
         return '<%r voted %r>' % (self.pid, self.vote)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'vote': self.vote,
+            'pid': self.pid,
+            'question_id': self.question_id,
+        }

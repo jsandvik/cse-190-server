@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from markr.mod_vote.models import Vote
-from markr.models import Question, Lecture, Class
+from markr.models import Question, Lecture, Class, Answer
 
 student = Blueprint('student', __name__, url_prefix='/student')
 
@@ -87,6 +87,22 @@ def get_questions(student_id, lecture_id):
     questions = [x.serialize for x in unique_questions]
     data = {
         "data" : questions
+    }
+
+    return jsonify(data)
+
+@student.route("/answers/<student_id>/<question_id>/", methods=['GET'])
+def get_answers_with_vote(student_id, question_id):
+    vote = Vote.query.filter_by(pid=student_id, question_id=question_id).one()
+
+    vote = vote.serialize
+
+    answers = Answer.query.filter_by(question=question_id)
+    answers = [x.serialize for x in answers]
+
+    data = {
+        "vote" : vote,
+        "answers" : answers
     }
 
     return jsonify(data)
