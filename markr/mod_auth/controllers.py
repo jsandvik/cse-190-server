@@ -18,10 +18,10 @@ def add_student():
     if not pid:
         return make_response("error", 400)
 
-    # Return error if student already exists with this PID
+    # Return if student already exists with this PID
     count = db.session.query(Student).filter(Student.pid == pid).count()
     if count > 0:
-        return make_response("error", 400)
+        return make_response("done", 200)
 
     # Insert new student
     student = Student(pid, "", "", "")
