@@ -13,12 +13,9 @@ def add_student():
         Adds the student to the database.
     """
     pid = request.form.get("pid", None, str)
-    first_name = request.form.get("f_name", None, str)
-    middle_name = request.form.get("m_name", None, str)
-    last_name = request.form.get("l_name", None, str)
 
     # Return error if required data is missing
-    if not first_name or not last_name or not pid:
+    if not pid:
         return make_response("error", 400)
 
     # Return error if student already exists with this PID
@@ -27,7 +24,7 @@ def add_student():
         return make_response("error", 400)
 
     # Insert new student
-    student = Student(pid, first_name, middle_name, last_name)
+    student = Student(pid, "", "", "")
     db.session.add(student)
     db.session.commit()
 
