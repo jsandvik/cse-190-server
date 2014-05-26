@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for, make_response, jsonfify
+                  flash, g, session, redirect, url_for, make_response
                   
 from markr import db
 
@@ -16,19 +16,19 @@ def add_student():
 
     # Return error if required data is missing
     if not pid:
-        return jsonfify({"error":True})
+        return make_response("error", 400)
 
     # Return if student already exists with this PID
     count = db.session.query(Student).filter(Student.pid == pid).count()
     if count > 0:
-        return jsonfify({"error":False})
+        return make_response("done", 200)
 
     # Insert new student
     student = Student(pid, "", "", "")
     db.session.add(student)
     db.session.commit()
 
-    return jsonfify({"error":False})
+    return make_response("done", 200)
 
 @mod_auth.route('/add-faculty/', methods=['POST'])
 def add_faculty():
