@@ -176,7 +176,23 @@ def get_vote_results(question_id):
     else:
         return render_template('vote/results.html', results = results)
     
+@mod_vote.route('/<int:question_id>/clear', methods=['POST', 'GET'])
+def clear_vote_results(question_id):
+    data = {}
     
+    question = Question.query.get(question_id)
+    if not question:
+        data['status'] = 'error'
+        data['message'] = 'Not a valid question identifier'
+        return jsonify(**data)
+        
+    votes = Vote.query.filter_by(question_id = question_id).all()
+    for vote in votes:
+        db.session.delete(vote)
+    db.session.commit()
+    data['status'] = 'success'
+    
+    return jsonify(**data)
             
         
         
