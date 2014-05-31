@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from markr import db
 from markr.models import Class, Lecture, Question, Answer
+from markr.mod_vote.models import Vote
 
 teacher = Blueprint('teacher', __name__, url_prefix='/teacher')
 
@@ -42,6 +43,7 @@ def get_questions(lecture_id):
 
     for question in questions:
         answers = Answer.query.filter_by(question=question["id"]).all()
+        question["vote_count"] = Vote.query.filter_by(question_id = question["id"]).count()
         question["number_of_options"] = len(answers)
         question["answers"] = [a.serialize for a in answers]
 
