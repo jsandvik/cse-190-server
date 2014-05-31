@@ -25,5 +25,7 @@ app.register_blueprint(teacher_admin_module)
 app.register_blueprint(teacher_module)
 app.register_blueprint(student_module)
 
+import markr.controllers
+
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', debug=True)
