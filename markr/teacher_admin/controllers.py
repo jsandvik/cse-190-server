@@ -69,6 +69,7 @@ def lectures(section_id):
     if request.method == "POST":
         lecture_id = request.form.get("delete-lecture", None, int)
         add_lecture = request.form.get("add-lecture", None, int)
+        export_csv = request.form.get("export-csv", None, int)
         if lecture_id != None:
             lecture = db.session.query(Lecture).filter(Lecture.id == lecture_id).one()
             db.session.delete(lecture)
@@ -80,6 +81,9 @@ def lectures(section_id):
             lecture = Lecture(date, section_id)
             db.session.add(lecture)
             db.session.commit()
+
+        if export_csv != None:
+            export_attendance()
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
 
@@ -189,3 +193,11 @@ def questions(lecture_id):
                             previous_lecture=previous_lecture,
                             next_lecture=next_lecture,
                             section=section)
+
+def export_attendance():
+    """
+        Exports a csv file with a list of all students that have voted for the corresponding questions in all the 
+        lectures of a given class.
+    """
+    pass
+
