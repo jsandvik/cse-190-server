@@ -166,7 +166,7 @@ def get_vote_results(question_id):
     results = db.session \
                 .query(Answer, func.count(Vote.id).label('total'), 'text') \
                 .filter_by(question = question_id) \
-                .outerjoin(Vote).group_by(Answer).order_by('total DESC').all()
+                .outerjoin(Vote).group_by(Answer).all()
     
     print results
     if return_json:
