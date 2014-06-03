@@ -32,7 +32,7 @@ db.session.add(question)
 db.session.commit()
 
 # First question's answers
-answer_choice_1 = Answer("Yes", question.id, False)
+answer_choice_1 = Answer("Yes", question.id, True)
 answer_choice_2 = Answer("No", question.id, False)
 answer_choice_3 = Answer("Just give me my A now", question.id, False)
 answer_choice_4 = Answer("Make me work for my A", question.id, False)
@@ -50,8 +50,8 @@ db.session.commit()
 
 # Second question's answers
 answer_choice_A = Answer("iOS", question2.id, False)
-answer_choice_B = Answer("Backend", question2.id, False)
-answer_choice_C = Answer("Frontend", question2.id, False)
+answer_choice_B = Answer("Backend", question2.id, True)
+answer_choice_C = Answer("Frontend", question2.id, True)
 answer_choice_D = Answer("Nothing", question2.id, False)
 answer_choice_E = Answer("All of the above", question2.id, False)
 db.session.add(answer_choice_A)
