@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for, make_response
+                  flash, g, session, redirect, url_for, make_response, Response
                   
+import csv
 from markr import db
 from markr.models import Question, Answer, Lecture, Class
 from datetime import datetime, timedelta
@@ -83,7 +84,7 @@ def lectures(section_id):
             db.session.commit()
 
         if export_csv != None:
-            export_attendance()
+            return export_attendance()
 
     lectures = db.session.query(Lecture).filter(Lecture.sec_id == section_id).order_by(Lecture.date.asc()).all()
 
@@ -196,8 +197,7 @@ def questions(lecture_id):
 
 def export_attendance():
     """
-        Exports a csv file with a list of all students that have voted for the corresponding questions in all the 
-        lectures of a given class.
+        Exports a csv file with a list of all students that have voted for the 
+        corresponding questions in all the lectures of a given class.
     """
     pass
-

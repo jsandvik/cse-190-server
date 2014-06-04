@@ -7,7 +7,12 @@
     <div class="row">
         <div class="col-sm-4 col-sm-offset-4">
             <form class="form-signin" role="form" method='post'>
-                <h2 class="form-signin-heading text-center">Markr</h2>
+                <div class="form-group">
+                    <div class="text-center">
+                        <img src="{{ url_for('static', filename = 'icon.png') }}">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <input type="input" name="id" class="form-control" placeholder="Teacher ID" required autofocus>
                 </div>
