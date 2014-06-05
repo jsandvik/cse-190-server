@@ -1,0 +1,12 @@
+body { 
+  background: url('bars_background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.header {
+    height: 13vh;
+}
+
