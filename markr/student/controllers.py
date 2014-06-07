@@ -63,6 +63,15 @@ def get_lectures(student_id, class_id):
             unique_lectures.append(lecture)
 
     lectures = [x.serialize for x in unique_lectures]
+
+    # This finds the proper lecture number for each lecture found
+    all_lectures = Lecture.query.filter_by(sec_id=class_id).all()
+    for lecture in lectures:
+        for i, x in enumerate(all_lectures):
+            if x.id == lecture["id"]:
+                lecture["number"] = i + 1
+
+
     data = {
         "data" : lectures
     }
