@@ -78,40 +78,48 @@ def get_lectures(student_id, class_id):
 
     return jsonify(data)
 
-@student.route('/questions/<student_id>/<lecture_id>/', methods=["GET"])
-def get_questions(student_id, lecture_id):
-    votes = Vote.query.filter_by(pid=student_id)
+@student.route('/questions/<student_id>/<class_id>/', methods=["GET"])
+def get_questions(student_id, class_id):
 
-    questions = []
+    # Get the votes
+    votes = Vote.query.filter_by(pid=student_id).all()
+
+    # Get the question and answers that go along with each vote
+    questions_with_answers = []
     for vote in votes:
-        questions.extend(Question.query.filter_by(id=vote.question_id, lecture_id=lecture_id))
+        question = Question.query.filter_by(id=vote.question_id).one()
+        answers = Answer.query.filter_by(question=vote.question_id).all()
+        questions_with_answers.append({
+            "vote" : vote,
+            "answers" : answers,
+            "question" : question
+        })
 
-    unique_questions = []
+    # Get unique questions
+    unique_questions_with_answers = []
     question_ids = []
-    for question in questions:
-        if question.id not in question_ids:
-            question_ids.append(question.id)
-            unique_questions.append(question)
+    for entry in questions_with_answers:
+        if entry["question"].id not in question_ids:
+            question_ids.append(entry["question"].id)
+            unique_questions_with_answers.append(entry)
 
-    questions = [x.serialize for x in unique_questions]
+    # Only display votes from the given lectures
+    lectures = Lecture.query.filter_by(sec_id=class_id).all()
+    filtered_questions_with_answers = []
+    for entry in unique_questions_with_answers:
+        for lecture in lectures:
+            if entry["question"].lecture_id == lecture.id:
+                filtered_questions_with_answers.append(entry)
+
+    # Serialize the data
+    for entry in filtered_questions_with_answers:
+        entry["vote"] = entry["vote"].serialize
+        entry["answers"] = [x.serialize for x in entry["answers"]]
+        entry["question"] = entry["question"].serialize
+
     data = {
-        "data" : questions
+        "data" : filtered_questions_with_answers
     }
 
     return jsonify(data)
 
-@student.route("/answers/<student_id>/<question_id>/", methods=['GET'])
-def get_answers_with_vote(student_id, question_id):
-    vote = Vote.query.filter_by(pid=student_id, question_id=question_id).one()
-
-    vote = vote.serialize
-
-    answers = Answer.query.filter_by(question=question_id)
-    answers = [x.serialize for x in answers]
-
-    data = {
-        "vote" : vote,
-        "answers" : answers
-    }
-
-    return jsonify(data)
