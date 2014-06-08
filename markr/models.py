@@ -52,7 +52,7 @@ class Lecture(db.Model):
     @property
     def serialize(self):
         return {
-            'date': str(self.date),
+            'date': self.date.strftime('%A, %B %d'),
             'sec_id': self.sec_id,
             'id': self.id,
         }
