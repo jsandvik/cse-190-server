@@ -89,8 +89,9 @@ def get_questions(student_id, class_id):
     for vote in votes:
         question = Question.query.filter_by(id=vote.question_id).one()
         answers = Answer.query.filter_by(question=vote.question_id).all()
+        student_answer = Answer.query.filter_by(id=vote.vote).one()
         questions_with_answers.append({
-            "vote" : vote,
+            "vote" : student_answer,
             "answers" : answers,
             "question" : question
         })
