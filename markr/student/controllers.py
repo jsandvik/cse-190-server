@@ -117,8 +117,11 @@ def get_questions(student_id, class_id):
         entry["answers"] = [x.serialize for x in entry["answers"]]
         entry["question"] = entry["question"].serialize
 
+    # Make sure lectures are grouped together
+    result = sorted(filtered_questions_with_answers, key=lambda x: x["question"]["lecture_id"])
+
     data = {
-        "data" : filtered_questions_with_answers
+        "data" : result
     }
 
     return jsonify(data)
